@@ -14,17 +14,32 @@ export class CustomValidators {
 
     return valid ? null : { passwordPattern: true };
   }
+
   static namePattern(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
 
     if (!value) return null; // Deixa outros validadores tratarem se estiver vazio
 
+    // Verifica se o nome é alfanumérico e não tem espaços
     const hasOnlyAlphanumeric = /^[a-zA-Z0-9]+$/.test(value);
-
     const hasSpaces = /\s/.test(value);
 
+    // Validação de caracteres e espaços
     const valid = hasOnlyAlphanumeric && !hasSpaces;
 
-    return valid ? null : { namePattern: true };
+    // Verifica se o nome já existe no localStorage
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const nameExists = users.some((user: { Name: string }) => user.Name === value);
+
+    // Se o nome for inválido ou já existir, retorna erro
+    if (!valid) {
+      return { namePattern: true }; // Nome não é alfanumérico ou contém espaços
+    }
+
+    if (nameExists) {
+      return { nameExists: true }; // Nome já existe no localStorage
+    }
+
+    return null; // Nome válido e único
   }
 }

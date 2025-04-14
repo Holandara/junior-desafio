@@ -16,6 +16,9 @@
                 <th scope="col" class="px-6 py-3">
                     E-mail
                 </th>
+                <th scope="col" class="px-6 py-3">
+                   Ações
+                </th>
             </tr>
         </thead>
         <tbody class="justify-items-center ">
@@ -39,8 +42,11 @@
                    }
                 </td>
                 <td class="px-6 py-4">
-                     {{ user.email }}
+                     {{ user.email}}
                 </td>
+                <button (click)="deleteUser(user)" type="button" class="text-red-500 hover:underline">
+                    deletar
+                  </button>
             </tr>
         </tbody>
     </table>
@@ -60,18 +66,21 @@
         minlength="3"
         class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" required />
         <div *ngIf="Name?.errors?.['required'] "class="text-sm text-danger">
-            • O nome é obrigatório.
+            ⓘ O nome é obrigatório.
         </div>
         <div *ngIf="Name?.errors?.['minlength'] "class="text-sm text-danger">
-            • O nome deve ter no mínimo 3 caracteres.
+            ⓘ O nome deve ter no mínimo 3 caracteres.
         </div>
         <div *ngIf="Name?.errors?.['maxlength'] "class="text-sm text-danger">
-            • O nome deve ter no máximo 10 caracteres.
+            ⓘ O nome deve ter no máximo 10 caracteres.
         </div>
         <div *ngIf="Name?.errors?.['namePattern']" class="text-sm text-danger">
-            • O nome deve ser único <br>
-            • Não deve conter espaços<br>
-            • Deve ser apenas alfanumérico<br>
+            ⓘ O nome deve ser único <br>
+            ⓘ Não deve conter espaços<br>
+            ⓘ Deve ser apenas alfanumérico<br>
+        </div>
+        <div *ngIf="Name?.valid && (Name?.dirty || Name?.touched)" class="text-sm text-green">
+            ⓘ Nome válido!
         </div>
           
     </div>
@@ -101,11 +110,18 @@
           class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" required />
           <ul>
             <div *ngIf="password?.errors?.['passwordPattern']" class="text-sm text-danger">
-                <li> • A senha precisa conter pelo menos uma letra maiúscula e um número.</li>
+               ⓘ A senha precisa conter pelo menos uma letra maiúscula e um número.
               </div>
               <div *ngIf="password?.errors?.['minlength']" class="text-sm text-danger">
-                <li> • A senha precisa ter mais de 3 caracteres</li>
+                ⓘ A senha precisa ter mais de 3 caracteres
               </div>
+              <div *ngIf="password?.errors?.['required'] "class="text-sm text-danger">
+                ⓘ A senha é obrigatória.
+            </div>
+            <div *ngIf="password?.valid && (Name?.dirty || password?.touched)" class="text-sm text-green">
+                ⓘ Senha válida!
+            </div>
+            
           </ul>
         </div>
 
@@ -119,10 +135,20 @@
         <label for="terms" class="ms-2 text-sm font-medium text-gray-600">Usuário é dinâmico?</label>
       </div>
   
-      <button type="submit" (click)="createUser()"  data-dialog-target="dialog"
-        class="text-white bg-blue hover:bg-green  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-        Registrar novo usuário
-      </button>
+    <!-- Botão de envio -->
+    <button 
+    type="submit"
+    [disabled]="profileForm.invalid"  
+    [ngClass]="{
+      'bg-blue': !profileForm.invalid,  
+      'bg-gray-300 cursor-not-allowed': profileForm.invalid  
+    }"
+    (click)="createUser()"
+    class="text-white hover:bg-green focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+    Registrar novo usuário
+  </button>
+  
+
        
       
       

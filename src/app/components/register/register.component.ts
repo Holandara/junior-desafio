@@ -43,7 +43,7 @@ export class RegisterComponent {
     this.isNewUser = !this.isNewUser;
   }
 
-
+  //para validação dos formulários reativos
   get email() {
     return this.profileForm.get('email');
   }
@@ -74,6 +74,20 @@ export class RegisterComponent {
       isFixed: false
     });
   }
+
+  deleteUser(userToDelete: User) {
+    const usersFromStorage = localStorage.getItem('users');
+    let users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
+  
+    users = users.filter((user: User) => user.Name !== userToDelete.Name);
+  
+    localStorage.setItem('users', JSON.stringify(users));
+  
+    // Atualiza lista exibida, se necessário
+    this.users = users;
+  }
+  
+  
 }
 
 interface User {
