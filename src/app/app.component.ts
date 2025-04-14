@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent} from "./components/header/header.component";
-import { PrimaryButtonComponent } from "./components/primary-button/primary-button.component";
-import { ProductsListComponent } from "./pages/products-list/products-list.component";
+import { RegisterComponent } from "./components/register/register.component";
+import { HeaderComponent } from "./components/header/header.component";
+
+
 
 @Component({
   selector: 'app-root',
-  imports: [HeaderComponent, PrimaryButtonComponent, ProductsListComponent],
+  imports: [RouterOutlet, RegisterComponent, HeaderComponent],
   template: `
-  <app-header />
-
-
-  <app-products-list />
+    <app-header></app-header>
+    <app-register/>
   `,
   styles: [],
 })

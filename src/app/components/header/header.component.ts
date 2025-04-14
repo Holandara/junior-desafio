@@ -1,20 +1,15 @@
-import { Component, signal } from '@angular/core';
-import { PrimaryButtonComponent } from "../primary-button/primary-button.component";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  imports: [PrimaryButtonComponent],
+  imports: [],
   template: `
-    <div class="header bg-slate-100 px-4 py-3 shadow-md justify-between flex items-center">
-      <span class="text-xl">My Store</span>
-      <app-primary-button label="Cart" (btnClicked)="showButtonClicked()"/>
-    </div>
+  <div class="header bg-slate-100 w-full px-4 py-3 shadow-md justify-between flex items-center">
+      <span class="text-xl">Header</span>
+      
+  </div>
   `,
+  styleUrl: './header.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
-
-
-  showButtonClicked(){
-    console.log('Button clicked');
-  }
-}
+export class HeaderComponent { }
