@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import { CustomValidators } from '../../validators/custom-validators';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, CommonModule],
+  imports: [RouterOutlet, ReactiveFormsModule, CommonModule, ButtonModule],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -16,15 +17,13 @@ export class RegisterComponent {
   isNewUser: boolean = false;
 
 
-//Usando reactive forms 
+//Usando reactive forms para validação de campo
   profileForm = new FormGroup({
     Name: new FormControl('',[Validators.required, Validators.minLength(3), Validators.maxLength(10), CustomValidators.namePattern]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('',[Validators.required,  Validators.minLength(3), CustomValidators.passwordPattern]),
     cpf: new FormControl(''),
     isFixed: new FormControl(false)
-
-
   });
 
   users: User[] = [];
@@ -38,7 +37,7 @@ export class RegisterComponent {
     this.users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
   }
    
-  //muda tela quando clica no botão 
+  //muda tela quando clica no botão  - temporário
   changeView() {
     this.isNewUser = !this.isNewUser;
   }
@@ -85,6 +84,21 @@ export class RegisterComponent {
   
     // Atualiza lista exibida, se necessário
     this.users = users;
+  }
+
+  countUser(usertoCount: User) {
+  
+  
+    localStorage.length;
+  }
+
+  //conta usuários dinâmicos
+  get fixedUsersCount(): number {
+    return this.users.filter(user => user.isFixed === false).length;
+  }
+  //conta usuários fixos
+  get dinamicUsersCount(): number {
+    return this.users.filter(user => user.isFixed === true).length;
   }
   
   
