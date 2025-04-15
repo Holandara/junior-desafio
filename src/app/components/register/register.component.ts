@@ -4,13 +4,27 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular
 import {CommonModule} from '@angular/common';
 import { CustomValidators } from '../../validators/custom-validators';
 import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { TooltipModule } from 'primeng/tooltip';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabel } from 'primeng/floatlabel';
+
+import { CardModule } from 'primeng/card';
+import { HeaderComponent } from "../header/header.component";
+
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, CommonModule, ButtonModule],
+  imports: [RouterOutlet, ReactiveFormsModule, CommonModule, ButtonModule, TableModule, DialogModule, ToastModule, TooltipModule, DatePickerModule, FloatLabel, CardModule, HeaderComponent],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService]
+  
 })
 export class RegisterComponent {
   title = 'desafio-junior';
@@ -28,7 +42,7 @@ export class RegisterComponent {
 
   users: User[] = [];
 
-  constructor() {
+  constructor(private messageService: MessageService) {
     this.loadUsers();
   }
 
@@ -86,11 +100,7 @@ export class RegisterComponent {
     this.users = users;
   }
 
-  countUser(usertoCount: User) {
-  
-  
-    localStorage.length;
-  }
+
 
   //conta usuários dinâmicos
   get fixedUsersCount(): number {
@@ -101,7 +111,27 @@ export class RegisterComponent {
     return this.users.filter(user => user.isFixed === true).length;
   }
   
+  visible: boolean = false;
+
+  showDialog() {
+      this.visible = true;
+  }
+  //MENSAGEM DE SUCESSO APÓS CRIAR USUÁRIO
+  showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Usuário criado',
+      detail: 'Cadastro realizado com sucesso!'
+    });
+  }
   
+  handleSubmit() {
+    if (this.profileForm.valid) {
+      this.createUser();
+      this.showSuccess(); // Exibe mensagem de sucesso
+    }
+  }
+
 }
 
 interface User {
@@ -111,3 +141,5 @@ interface User {
   cpf: string;
   isFixed: boolean;
 }
+
+

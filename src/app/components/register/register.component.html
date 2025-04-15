@@ -1,170 +1,202 @@
-@if (isNewUser == false) {
-<div class="relative p-10 justify-end">  
-  <button class=" w-max flex-end justify-items-center hover:transition-all px-3 py-2 text-sm font-medium text-center text-white bg-blue rounded-lg hover:bg-green" (click)="changeView()">Cadastrar novo usuário</button>
+
+<!-- TABLE -->
+<div class="relative py-5 px-10 justify-end ">  
+ <p-button (click)="showDialog()" label="Cadastrar Novo usuário" />
 </div>
 
-<div class="relative px-10 mx-auto flex flex-1/2 rounded-lg">
   
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr class="rounded-lg">
-                <th scope="col" class="px-6 py-3">
-                   Nome
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    CPF
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Tipo de Licença
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    E-mail
-                </th>
-                <th scope="col" class="px-6 py-3">
-                   Ações
-                </th>
-            </tr>
-        </thead>
-        <tbody class="justify-items-center ">
-              <tr *ngFor="let user of users" class="bg-white border-b border-gray-200 rounded-lg ">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                    {{ user.Name }}
-                </th>
-                <td class="px-6 py-4">
-                    {{ user.cpf }}
-                </td>
-                <td class="px-6 py-4">
-                   @if (user.isFixed === true)  {
-                    <span class="inline-flex items-center bg-orange-100 text-orange-200 text-xs font-medium px-2.5 py-0.5 rounded-md border-1 border-orange-200">
-                        Dinâmica
-                    </span>
-                   }
-                   @else {
-                    <span class="inline-flex items-center bg-green-100 text-green text-xs font-medium px-2.5 py-0.5 rounded-md border-1 border-green ">
-                        Fixa
-                    </span>
-                   }
-                </td>
-                <td class="px-6 py-4">
-                     {{ user.email}}
-                </td>
-                <td>
-                  
-                  <p-button (click)="deleteUser(user)"label="Delete" icon="pi pi-trash" />
-               
-              </td>
-                
-            </tr>
-        </tbody>
-    </table>
-    <div class="relative p-10 mx-auto flex flex-col flex-1/2 rounded-lg">
-      <p class="text-lg font-semibold">Usuários dinâmicos: {{ fixedUsersCount }}</p>
-
-      <p class="text-lg font-semibold">Usuários fixos: {{ dinamicUsersCount }}</p>
-    </div>
+  <div class="relative px-10 mx-auto flex flex-1/2 rounded-lg ">  
+    <p-table [value]="users" [rowHover]="true" class="w-full text-sm text-left text-gray-500 shadow-md">
+      
+      <!-- Cabeçalho -->
+      <ng-template pTemplate="header">
+        <tr class="text-xs text-gray-700 uppercase bg-gray-100">
+          <th class="px-6 py-4 font-medium" pSortableColumn="Name">
+            Nome
+            <p-sortIcon field="Name" />
+          </th>
+          <th class="px-6 py-4 font-medium" pSortableColumn="cpf">
+            CPF
+            <p-sortIcon field="cpf" />
+          </th>
+          <th class="px-6 py-4 font-medium" pSortableColumn="isFixed">
+            Tipo de Licença
+            <p-sortIcon field="isFixed" />
+          </th>
+          <th class="px-6 py-4 font-medium" pSortableColumn="email">
+            E-mail
+            <p-sortIcon field="email" />
+          </th>
+          <th class="px-6 py-4 font-medium">
+            Ações
+          </th>
+        </tr>
+      </ng-template>
   
-</div>  
-  } @else {
-    <form [formGroup]="profileForm"  class="max-w-sm mx-auto">
-      <div class="py-10 font-sans font-bold text-xl">Cadastro de novo usuário</div>
-  <!-- Nome -->
-    <div class="mb-5">
-        <label for="nome" class="block mb-2 text-sm font-medium text-gray-900">Nome</label>
-        <input 
-        type="text" 
-        id="name" 
-        formControlName="Name" 
-        placeholder="Nome"
-        required 
-        minlength="3"
-        class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" required />
-        <div *ngIf="Name?.errors?.['required'] "class="text-sm text-danger">
-            ⓘ O nome é obrigatório.
-        </div>
-        <div *ngIf="Name?.errors?.['minlength'] "class="text-sm text-danger">
-            ⓘ O nome deve ter no mínimo 3 caracteres.
-        </div>
-        <div *ngIf="Name?.errors?.['maxlength'] "class="text-sm text-danger">
-            ⓘ O nome deve ter no máximo 10 caracteres.
-        </div>
-        <div *ngIf="Name?.errors?.['namePattern']" class="text-sm text-danger">
-            ⓘ O nome deve ser único <br>
-            ⓘ Não deve conter espaços<br>
-            ⓘ Deve ser apenas alfanumérico<br>
-        </div>
-        <div *ngIf="Name?.valid && (Name?.dirty || Name?.touched)" class="text-sm text-green">
-            ⓘ Nome válido!
-        </div>
-          
-    </div>
-
-    <!-- Email -->
-      <div class="mb-5">
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">E-mail</label>
-        <input type="email" id="email" formControlName="email" placeholder="usuario@gmail.com"
-          class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" />
-        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
-            <div *ngIf="email?.errors?.['email']" class="text-sm text-danger">
-                O formato do e-mail é inválido!
-            </div>
-        </div>
-        </div>
-    <!-- CPF -->
-      <div class="mb-5">
-        <label for="cpf" class="block mb-2 text-sm font-medium text-gray-900">CPF</label>
-        <input type="text" id="cpf" formControlName="cpf" placeholder="123.456.789-00"
-          class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" />
+      <!-- Corpo -->
+      <ng-template pTemplate="body" let-user>
+        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 transition-all duration-200 ease-in-out">
+          <td class="px-6 py-4 text-gray-900 font-medium whitespace-nowrap">
+            {{ user.Name }}
+          </td>
+          <td class="px-6 py-4">
+            {{ user.cpf }}
+          </td>
+          <td class="px-6 py-4">
+            <ng-container *ngIf="user.isFixed; else fixed">
+              <span class="inline-flex items-center bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full border border-orange-300">
+                Dinâmica
+              </span>
+            </ng-container>
+            <ng-template #fixed>
+              <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full border border-green-300">
+                Fixa
+              </span>
+            </ng-template>
+          </td>
+          <td class="px-6 py-4">
+            {{ user.email }}
+          </td>
+          <td class="px-6 py-4">
+            <p-button 
+              [rounded]="true"
+              [text]="true"
+              type="button" 
+              (click)="deleteUser(user)" 
+              icon="pi pi-trash" 
+              severity="danger"
+              variant="outlined"
+              class=" "
+            />
+          </td>
+        </tr>
+      </ng-template>
+  
+    </p-table>
+    <!-- USUÁRIOS FIXOS -->
+    <div class="relative p-5 mx-auto flex-1/3  rounded-lg ">
+      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2">
+        <p class="py-2 px-2 justify-self-start-safe">Usuários Fixos</p>
+        <span class="align-items justify-self-end-safe grid-row-2 pi pi-lock text-white bg-green rounded-full p-4"></span>
+        <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ fixedUsersCount }}</span></div>
       </div>
-
-    <!-- Senha -->
-      <div class="mb-5">
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Senha</label>
-        <input type="password" id="password" formControlName="password"
+      
+      
+      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 mt-10 ">
+        <p class="py-0 px-2 justify-self-start-safe inline">Usuários Dinâmicos</p>
+        <span class="align-items justify-self-end-safe grid-row-2 pi pi-history text-white bg-orange-400 rounded-full p-4"></span>
+        <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ dinamicUsersCount }}</span></div>
+      </div>
+    </div>
+  </div>
+     <!-- CADASTRO DE NOVO USUÁRIO -->
+    <p-dialog  [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+      <form [formGroup]="profileForm"  class="max-w-sm mx-auto" (ngSubmit)="handleSubmit()">
+        <div class="py-10 font-sans font-bold text-xl">Cadastro de novo usuário</div>
+    <!-- Nome -->
+      <div class="mb-5 flex flex-col flex-1/2">
+          <label for="nome" class="block mb-2 text-sm font-medium text-gray-900">Nome</label>
+          <input 
+          type="text" 
+          id="name" 
+          formControlName="Name" 
+          placeholder="Nome"
+          required 
+          minlength="3"
           class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" required />
-          <ul>
-            <div *ngIf="password?.errors?.['passwordPattern']" class="text-sm text-danger">
-               ⓘ A senha precisa conter pelo menos uma letra maiúscula e um número.
-              </div>
-              <div *ngIf="password?.errors?.['minlength']" class="text-sm text-danger">
-                ⓘ A senha precisa ter mais de 3 caracteres
-              </div>
-              <div *ngIf="password?.errors?.['required'] "class="text-sm text-danger">
-                ⓘ A senha é obrigatória.
-            </div>
-            <div *ngIf="password?.valid && (Name?.dirty || password?.touched)" class="text-sm text-green">
-                ⓘ Senha válida!
-            </div>
+          <div *ngIf="Name?.errors?.['required'] "class="text-sm text-danger">
+              ⓘ O nome é obrigatório.
+          </div>
+          <div *ngIf="Name?.errors?.['minlength'] "class="text-sm text-danger">
+              ⓘ O nome deve ter no mínimo 3 caracteres.
+          </div>
+          <div *ngIf="Name?.errors?.['maxlength'] "class="text-sm text-danger">
+              ⓘ O nome deve ter no máximo 10 caracteres.
+          </div>
+          <div *ngIf="Name?.errors?.['namePattern']" class="text-sm text-danger">
+              ⓘ O nome deve ser único <br>
+              ⓘ Não deve conter espaços<br>
+              ⓘ Deve ser apenas alfanumérico<br>
+          </div>
+          <div *ngIf="Name?.valid && (Name?.dirty || Name?.touched)" class="text-sm text-green">
+              ⓘ Nome válido!
+          </div>
             
-          </ul>
-        </div>
-
-    <!-- Fixo/Dinâmico -->
-      <div class="flex items-start mb-5">
-        <div class="flex items-center h-5">
-          <input id="terms" type="checkbox" formControlName="isFixed"
-            class="w-4 h-4 border border-blue rounded-sm bg-blue focus:ring-3 focus:ring-blue" />
-            
-        </div>
-        <label for="terms" class="ms-2 text-sm font-medium text-gray-600">Usuário é dinâmico?</label>
       </div>
   
-    <!-- Botão de envio -->
-    <button 
-    type="submit"
-    [disabled]="profileForm.invalid"  
-    [ngClass]="{
-      'bg-blue': !profileForm.invalid,  
-      'bg-gray-300 cursor-not-allowed': profileForm.invalid  
-    }"
-    (click)="createUser()"
-    class="text-white hover:bg-green focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-    Registrar novo usuário
-  </button>
+      <!-- Email -->
+        <div class="mb-5">
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900">E-mail</label>
+          <input type="email" id="email" formControlName="email" placeholder="usuario@gmail.com"
+            class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" />
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+              <div *ngIf="email?.errors?.['email']" class="text-sm text-danger">
+                  O formato do e-mail é inválido!
+              </div>
+          </div>
+          </div>
+      <!-- CPF -->
+        <div class="mb-5">
+          <label for="cpf" class="block mb-2 text-sm font-medium text-gray-900">CPF</label>
+          <input type="text" id="cpf" formControlName="cpf" placeholder="123.456.789-00"
+            class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" />
+        </div>
   
+      <!-- Senha -->
+        <div class="mb-5">
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Senha</label>
+          <input type="password" id="password" formControlName="password" placeholder="•••••••••"
+            class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" required />
+            <ul>
+              <div *ngIf="password?.errors?.['passwordPattern']" class="text-sm text-danger">
+                 ⓘ A senha precisa conter pelo menos uma letra maiúscula e um número.
+                </div>
+                <div *ngIf="password?.errors?.['minlength']" class="text-sm text-danger">
+                  ⓘ A senha precisa ter mais de 3 caracteres
+                </div>
+                <div *ngIf="password?.errors?.['required'] "class="text-sm text-danger">
+                  ⓘ A senha é obrigatória.
+              </div>
+              <div *ngIf="password?.valid && (Name?.dirty || password?.touched)" class="text-sm text-green">
+                  ⓘ Senha válida!
+              </div>
+              
+            </ul>
 
-       
-      
-      
-    </form>
-  }
+            <div class="pt-4 text-sm font-medium text-gray-900 mb-2">
+              Escolha uma data de acesso
+              <p-datepicker showIcon iconDisplay="input" />
+            </div>
+            
+            
+          </div>
   
+      <!-- Fixo/Dinâmico -->
+        <div class="flex items-start mb-5">
+          <div class="flex items-center h-5">
+            <input id="terms" type="checkbox" formControlName="isFixed" pTooltip="Usuários com esta licença poderão acessar o sistema sempre
+que não for atingida a quantidade máxima de licenças disponíveis por dia."
+              class="w-4 h-4 border border-blue rounded-sm bg-blue focus:ring-3 focus:ring-blue" />
+              
+          </div>
+          <label for="terms" class="ms-2 text-sm font-medium text-gray-600"  pTooltip="Enter your username" tooltipEvent="focus">Usuário é dinâmico? ⓘ</label>
+        </div>
+      
+    
+      <!-- Botão de envio -->
+      <button 
+      (click)="handleSubmit()"
+      type="submit"
+      [disabled]="profileForm.invalid"  
+      [ngClass]="{
+        'bg-blue': !profileForm.invalid,  
+        'bg-gray-300 cursor-not-allowed': profileForm.invalid  
+      }"
+    
+      
+      class="text-white hover:bg-green focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+      Registrar novo usuário
+       
+    </button>  
+     </form>
+    </p-dialog>
