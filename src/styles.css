@@ -25,3 +25,24 @@
 
     --radius-xl: 0.625rem;
 }
+
+/* Scrollbar para navegadores WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f1f5; /* Cor do fundo (gray-800) */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f0f1f5; /* Cor do thumb (purple-500) */
+  border-radius: 9999px; /* Arredondamento total */
+}
+
+/* Scrollbar para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #068a8f #f0f1f5; /* thumb e track */
+}

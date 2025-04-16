@@ -9,7 +9,7 @@ import { HeaderComponent } from "./components/header/header.component";
   selector: 'app-root',
   imports: [RouterOutlet, RegisterComponent, HeaderComponent],
   template: `
-    <app-header></app-header>
+    
     <app-register/>
   `,
   styles: [],

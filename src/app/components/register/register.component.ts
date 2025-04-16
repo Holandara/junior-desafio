@@ -34,10 +34,10 @@ export class RegisterComponent {
 //Usando reactive forms para validação de campo
   profileForm = new FormGroup({
     Name: new FormControl('',[Validators.required, Validators.minLength(3), Validators.maxLength(10), CustomValidators.namePattern]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [ Validators.email]),
     password: new FormControl('',[Validators.required,  Validators.minLength(3), CustomValidators.passwordPattern]),
     cpf: new FormControl(''),
-    isFixed: new FormControl(false)
+    isFixed: new FormControl(false),
   });
 
   users: User[] = [];
@@ -67,6 +67,16 @@ export class RegisterComponent {
   get password() {
     return this.profileForm.get('password');
   }
+
+  //conta usuários dinâmicos
+  get fixedUsersCount(): number {
+    return this.users.filter(user => user.isFixed === false).length;
+  }
+  //conta usuários fixos
+  get dinamicUsersCount(): number {
+    return this.users.filter(user => user.isFixed === true).length;
+  }
+  
   
   createUser() {
     const newUser = this.profileForm.value as User;
@@ -86,6 +96,9 @@ export class RegisterComponent {
       cpf: '',
       isFixed: false
     });
+
+    this.visible = false;//fecha diálog de registro
+    this.users = users;//Atualiza tabela em tempo real
   }
 
   deleteUser(userToDelete: User) {
@@ -100,23 +113,12 @@ export class RegisterComponent {
     this.users = users;
   }
 
-
-
-  //conta usuários dinâmicos
-  get fixedUsersCount(): number {
-    return this.users.filter(user => user.isFixed === false).length;
-  }
-  //conta usuários fixos
-  get dinamicUsersCount(): number {
-    return this.users.filter(user => user.isFixed === true).length;
-  }
-  
+  //MENSAGEM DE SUCESSO APÓS CRIAR USUÁRIO
   visible: boolean = false;
 
   showDialog() {
       this.visible = true;
   }
-  //MENSAGEM DE SUCESSO APÓS CRIAR USUÁRIO
   showSuccess() {
     this.messageService.add({
       severity: 'success',
@@ -131,7 +133,6 @@ export class RegisterComponent {
       this.showSuccess(); // Exibe mensagem de sucesso
     }
   }
-
 }
 
 interface User {
