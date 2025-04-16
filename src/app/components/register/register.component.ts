@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import { CustomValidators } from '../../validators/custom-validators';
@@ -11,8 +10,6 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabel } from 'primeng/floatlabel';
-
 import { CardModule } from 'primeng/card';
 import { HeaderComponent } from "../header/header.component";
 
@@ -20,11 +17,10 @@ import { HeaderComponent } from "../header/header.component";
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, CommonModule, ButtonModule, TableModule, DialogModule, ToastModule, TooltipModule, DatePickerModule, FloatLabel, CardModule, HeaderComponent],
+  imports: [ ReactiveFormsModule, CommonModule, ButtonModule, TableModule, DialogModule, ToastModule, TooltipModule, DatePickerModule, CardModule, HeaderComponent],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [MessageService]
-  
 })
 export class RegisterComponent {
   title = 'desafio-junior';

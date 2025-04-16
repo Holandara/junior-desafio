@@ -1,20 +1,17 @@
-// app.config.ts
 import { ApplicationConfig } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeng/themes/aura'; // Corrigido o nome aqui
+import { PrimeNGConfig } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideAnimationsAsync(),
         providePrimeNG({
             ripple: true,
-            theme: {
-                preset: Aura,
-                options:{
-                  darkModeSelector: '.my-app-dark'
-                }
+            theme: 'aura-light-blue',  // Use o nome do tema como string
+            options: {
+                darkModeSelector: '.my-app-dark'
             }
-        })
+        }),
     ]
 };
