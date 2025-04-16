@@ -125,6 +125,7 @@ export class RegisterComponent {
   
   handleSubmit() {
     if (this.profileForm.valid) {
+      this.showSuccess();
       this.createUser();
       this.showSuccess(); // Exibe mensagem de sucesso
     }
