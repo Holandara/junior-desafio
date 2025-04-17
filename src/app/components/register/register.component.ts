@@ -72,6 +72,8 @@ export class RegisterComponent {
   get dinamicUsersCount(): number {
     return this.users.filter(user => user.isFixed === true).length;
   }
+
+  
   
   
   createUser() {
@@ -95,8 +97,10 @@ export class RegisterComponent {
 
     this.visible = false;//fecha diálog de registro
     this.users = users;//Atualiza tabela em tempo real
-  }
+    this.profileForm.get('username')?.updateValueAndValidity();//Atualiza validators
 
+  }
+  visible: boolean = false; //Determina o dialog de registro como invisível assim que entra na página
   deleteUser(userToDelete: User) {
     const usersFromStorage = localStorage.getItem('users');
     let users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
@@ -110,7 +114,7 @@ export class RegisterComponent {
   }
 
   //MENSAGEM DE SUCESSO APÓS CRIAR USUÁRIO
-  visible: boolean = false;
+  
 
   showDialog() {
       this.visible = true;

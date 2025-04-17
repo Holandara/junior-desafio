@@ -12,7 +12,7 @@ module.exports = {
             fontFamily: {
                 sans: ['Helvetica', 'Arial', 'sans-serif'],
                 serif: ['Georgia', 'serif'],
-                
+                display: ["Montserrat"],
             },
         },
     },

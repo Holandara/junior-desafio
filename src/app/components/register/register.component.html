@@ -3,7 +3,7 @@
  <app-header></app-header>
 <div class="relative py-5 px-10 justify-end "> 
   
- <div (click)="showDialog()"><i pTooltip="Cadastrar novo usuário" tooltipEvent="hover"style="font-size: 1rem" class="pi pi-plus rounded-full bg-blue text-white p-4 cursor-pointer hover:bg-green delay-150 transition ease-in-out duration-300"></i> </div>
+ <div ><i (click)="showDialog()"  pTooltip="Cadastrar novo usuário" tooltipEvent="hover"style="font-size: 1rem" class="pi pi-plus rounded-full bg-blue text-white p-4 cursor-pointer hover:bg-green delay-150 transition ease-in-out duration-300"></i> </div>
 </div>
 
   <div class=" relative px-10 mx-auto flex flex-wrap gap-5  rounded-lg ">  
@@ -93,7 +93,7 @@
      <!-- CADASTRO DE NOVO USUÁRIO -->
     <p-dialog  [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
       <form [formGroup]="profileForm"  class="max-w-sm mx-auto" (ngSubmit)="handleSubmit()">
-        <div class="pb-10 font-sans font-light text-3xl bg-gradient-to-r from-blue to-green inline-block text-transparent bg-clip-text">Cadastro de novo usuário</div>
+        <div class="pb-10 font-sans font-bold text-2xl  bg-gradient-to-r from-blue to-green inline-block text-transparent bg-clip-text">Cadastro de novo usuário</div>
     <!-- Nome -->
       <div class="mb-5 flex flex-col flex-1/2">
           <label for="nome" class="block mb-2 text-sm font-medium text-gray-900">Nome</label>
@@ -102,10 +102,10 @@
           id="name" 
           formControlName="Name" 
           placeholder="Nome"
-          required 
+          
           minlength="3"
-          class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" required />
-          <div *ngIf="Name?.errors?.['required'] "class="text-sm text-danger">
+          class="focus:blue shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 placeholder-gray-300" />
+          <div *ngIf="Name?.errors?.['required'] && (Name?.dirty || Name?.touched)"class="text-sm text-danger">
               ⓘ O nome é obrigatório.
           </div>
           <div *ngIf="Name?.errors?.['minlength'] "class="text-sm text-danger">
@@ -114,15 +114,14 @@
           <div *ngIf="Name?.errors?.['maxlength'] "class="text-sm text-danger">
               ⓘ O nome deve ter no máximo 10 caracteres.
           </div>
-          <div *ngIf="Name?.errors?.['namePattern']" class="text-sm text-danger">
+          <div *ngIf="Name?.errors?.['namePattern'] && (Name?.dirty || Name?.touched)" class="text-sm text-danger">
               ⓘ O nome deve ser único <br>
               ⓘ Não deve conter espaços<br>
               ⓘ Deve ser apenas alfanumérico<br>
           </div>
-          <div *ngIf="Name?.valid && (Name?.dirty || Name?.touched)" class="text-sm text-green">
+          <div *ngIf="Name?.valid" class="text-sm text-green">
               ⓘ Nome válido!
           </div>
-            
       </div>
   
       <!-- Email -->
@@ -146,8 +145,8 @@
       <!-- Senha -->
         <div class="mb-5">
           <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Senha</label>
-          <input type="password" id="password" formControlName="password" placeholder="•••••••••"
-            class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" required />
+          <input type="password" id="password" formControlName="password" pInputText placeholder="•••••••••"
+            class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-300" />
             <ul>
               <div *ngIf="password?.errors?.['passwordPattern']" class="text-sm text-danger">
                  ⓘ A senha precisa conter pelo menos uma letra maiúscula e um número.
@@ -164,11 +163,6 @@
               
             </ul>
 
-            <div class="pt-4 text-sm font-medium text-gray-900 mb-2">
-              Escolha uma data de acesso
-              <p-datepicker showIcon iconDisplay="input" />
-            </div>
-            
             
           </div>
   
@@ -190,12 +184,12 @@
       type="submit"
       [disabled]="profileForm.invalid"  
       [ngClass]="{
-        'bg-blue': !profileForm.invalid,  
+        'bg-gradient-to-r from-blue to-green': !profileForm.invalid,  
         'bg-gray-300 cursor-not-allowed': profileForm.invalid  
       }"
     
       
-      class="text-white hover:bg-green focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+      class="text-white cursor-pointer hover:bg-gradient-to-r from-blue to-green focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
       Registrar novo usuário
        
     </button>  

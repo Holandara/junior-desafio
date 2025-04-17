@@ -14,6 +14,24 @@ export class CustomValidators {
 
     return valid ? null : { passwordPattern: true };
   }
+  static loginPattern(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+   
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const nameExists = users.some((user: { Name: string }) => user.Name === value);
+      const passwordsExists = users.some((user: { password: string }) => user.password === value);
+      
+      if (nameExists && passwordsExists) {
+        console.log("bbb")
+      }
+      else{
+        console.log("aaaa")
+      }
+      
+      const valid = nameExists && passwordsExists;
+      return valid ? null : { passwordPattern: true }
+  }
+
 
   static namePattern(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
@@ -30,16 +48,13 @@ export class CustomValidators {
     // Verifica se o nome já existe no localStorage
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const nameExists = users.some((user: { Name: string }) => user.Name === value);
-
     // Se o nome for inválido ou já existir, retorna erro
     if (!valid) {
       return { namePattern: true }; // Nome não é alfanumérico ou contém espaços
     }
-
     if (nameExists) {
       return { nameExists: true }; // Nome já existe no localStorage
     }
-
     return null; // Nome válido e único
   }
 }

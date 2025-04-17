@@ -1,27 +1,51 @@
 
-<div class="mb-4 pt-30 flex items-center justify-center">
-    <p-card header="Simple Card">
-    
-        <div class="w-fit self-center">
-            <div class="w-full  items-center justify-center gap-3 py-5">
-                <div class="flex flex-col gap-2">
-                    <label for="username">Nome</label>
-                    <input pInputText id="username" type="text" />
+<div class="h-screen  flex items-center justify-center bg-white-100">
+        
+            
+            <div class="h-fit items-center justify-center gap-3 ">
+                <img class="ml-10 flex flex-col  gap-2 items-center justify-center align-middle h-40 w-40"src="/logodigi.png">
+                <div class="font-sans flex flex-col gap-2 mb-5 justify-items-center text-center text-3xl p-3 text-blue">
+                    Bem Vindo!
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label for="password">Senha</label>
-                    <input pInputText id="password" type="password" />
+
+                <!-- LOGIN-->
+                <form [formGroup]="loginForm">
+
+                <div class="flex flex-col gap-2 mb-5">
+                    <p-iconfield>
+                        <p-inputicon class="pi pi-user" />
+                        <input pInputText placeholder="Usuário" formControlName="Name" />
+                        
+                    </p-iconfield>
                 </div>
+
                 <div class="flex flex-col gap-2">
+                    <p-iconfield>
+                        <p-inputicon class="pi pi-lock" />
+                        <input pInputText placeholder="Senha" formControlName="password" />
+                    </p-iconfield>
+                </div>
+
+                <div *ngIf="Name?.errors?.['required'] && password?.errors?.['required']"
+                      class="text-sm text-danger">
+                    ⓘ E-mail ou senha inválidos
+                </div>
+                <div class="flex flex-col gap-2 text-gray-900">
                     Escolha uma data de acesso
-                    <p-datepicker showIcon iconDisplay="input" />
+                    <p-datepicker showIcon iconDisplay="input"/>
                 </div>
-                <div class="flex flex-col gap-2 pt-4">
-                    <button  [routerLink]="['/registro']" label="Login" icon="pi pi-user" class="bg-blue rounded-xl text-xl font-medium p-2 text-white">
-                        Login
+                <div class="flex flex-col gap-2 pt-4 ">
+                    <button iconPosition="left" 
+                            (click)="login()"
+                        
+                            label="Login" icon="pi pi-user"  
+                            class="border-2 bg-gradient-to-r from-blue to-green shadow-xl rounded-xl text-xl font-medium p-2 text-white">
+                        Entrar
                     </button>
                 </div>
+            </form>
             </div>
         </div>    
-    </p-card>
-</div>
+     
+      
+        

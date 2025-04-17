@@ -1,11 +1,14 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "primeicons/primeicons.css";
-
 @import "tailwindcss";
 
+
+html, body {
+  font-family:Montserrat;
+}
 @theme {
     --color-blue: #068a8f;
-    --color-green: #2db14c;
+    --color-green: #71B66F;
     --color-black: #2d2d2d;
     --color-purple: #9871f3;
     --color-danger: #F05D6C;
@@ -17,9 +20,10 @@
     --color-gray-500: #2A313C;
     --color-gray-600: #21252C;
     --color-gray-800: #13161B;
-    --color-gray-900: #0F1216;
+    --color-gray-900: #3F3E3E;
     --color-orange-200: #c2410c;
     --color-orange-100: #ffedd5;
+    --color-white-100: #F8F9FA;
 
     --font-heading: var(--font-oxanium);
     --font-sans: var(--font-montserrat);
