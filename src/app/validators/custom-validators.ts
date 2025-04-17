@@ -14,24 +14,6 @@ export class CustomValidators {
 
     return valid ? null : { passwordPattern: true };
   }
-  static loginPattern(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-   
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const nameExists = users.some((user: { Name: string }) => user.Name === value);
-      const passwordsExists = users.some((user: { password: string }) => user.password === value);
-      
-      if (nameExists && passwordsExists) {
-        console.log("bbb")
-      }
-      else{
-        console.log("aaaa")
-      }
-      
-      const valid = nameExists && passwordsExists;
-      return valid ? null : { passwordPattern: true }
-  }
-
 
   static namePattern(control: AbstractControl): ValidationErrors | null {
     const value = control.value;

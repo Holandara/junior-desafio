@@ -47,25 +47,22 @@ get password() {
   return this.loginForm.get('password');
 }
 
+loginError = false;
 login() {
-  if (this.loginForm.invalid) {
-    console.log('Formulário inválido');
-    return;
-  }
-
   const name = this.Name?.value;
-  const pass = this.password?.value;
+  const password = this.password?.value;
 
-  const user = this.users.find(u => u.Name === name && u.password === pass);
+  const user = this.users.find(u => u.Name === name && u.password === password);
+ 
 
   if (user) {
-    // login OK
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
+    this.loginError = false; // limpa erro se tiver
     this.router.navigate(['/registro']);
   } else {
-    console.log('Usuário ou senha incorretos');
+    this.loginError = true; // mostra erro se falhou
   }
 }
+
 
  }
  interface User {
