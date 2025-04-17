@@ -12,11 +12,11 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular
 import {CommonModule} from '@angular/common';
 import { CustomValidators } from '../../validators/custom-validators';
 import { HeaderComponent } from "../header/header.component";
-
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-login',
   imports: [RouterModule, DividerModule, ButtonModule, InputTextModule, CardModule, ReactiveFormsModule,
-            DatePickerModule, InputIconModule, IconFieldModule, CommonModule],
+            DatePickerModule, InputIconModule, IconFieldModule, CommonModule, MessageModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +25,7 @@ import { HeaderComponent } from "../header/header.component";
 
 
 export class LoginComponent {
+  
   loginForm = new FormGroup({
     Name: new FormControl('',[Validators.required]),
     password: new FormControl('',[Validators.required]),
@@ -32,7 +33,9 @@ export class LoginComponent {
   users: User[] = [];
   constructor(private router: Router) {
     this.loadUsers();
+    
 }
+
 
 loadUsers() {
   const usersFromStorage = localStorage.getItem('users');
@@ -56,10 +59,10 @@ login() {
  
 
   if (user) {
-    this.loginError = false; // limpa erro se tiver
+    this.loginError = false; 
     this.router.navigate(['/registro']);
   } else {
-    this.loginError = true; // mostra erro se falhou
+    this.loginError = true;
   }
 }
 
