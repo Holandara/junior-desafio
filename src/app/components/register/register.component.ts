@@ -112,7 +112,11 @@ export class RegisterComponent {
     this.visible = false;//fecha diálog de registro
     this.users = users;//Atualiza tabela em tempo real
     this.profileForm.get('username')?.updateValueAndValidity();//Atualiza validators
-    
+    this.messageService.add({ 
+      severity: 'success', 
+      summary: 'Cadastro realizado com sucesso!', 
+      detail: 'O novo usuário foi cadastrado com sucesso.' 
+    });
 
   }
   visible: boolean = false; //Determina o dialog de registro como invisível assim que entra na página
@@ -149,7 +153,21 @@ export class RegisterComponent {
       this.showSuccess(); // Exibe mensagem de sucesso
     }
   }
+
+
+ 
+hasUserLoggedToday(userName: string): boolean {
+  const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+  const today = new Date().toISOString().split('T')[0];
+  
+  return loginHistory.some(
+    (login: any) => login.userName === userName && 
+                   login.date === today && 
+                   login.isDynamic
+  );
 }
+}
+
 
 interface User {
   Name: string;
