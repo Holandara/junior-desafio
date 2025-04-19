@@ -37,7 +37,10 @@ export class RegisterComponent {
   });
 
   users: User[] = [];
-
+  
+  loggedDynamicUsersToday = 0;
+  readonly MAX_DYNAMIC_LICENSES = 3;
+  
   constructor(private messageService: MessageService) {
     this.loadUsers();
   }
@@ -45,6 +48,16 @@ export class RegisterComponent {
   loadUsers() {
     const usersFromStorage = localStorage.getItem('users');
     this.users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
+
+    const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+    const today = new Date().toISOString().split('T')[0];
+
+    const dynamicUsersToday = loginHistory
+    .filter((login: any) => login.date === today && login.isDynamic)
+    .map((login: any) => login.userName);
+
+    this.loggedDynamicUsersToday = new Set(dynamicUsersToday).size;
+
   }
    
   //muda tela quando clica no botão  - temporário

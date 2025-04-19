@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'//permite reutilização pois está declarado globalmente
 })
 export class LicenseService {
   private readonly MAX_DYNAMIC_LICENSES = 1; // Máximo de usuários dinâmicos distintos por dia
   private readonly LOGIN_HISTORY_KEY = 'loginHistory';
 
+
+  //Esse método verifica se o usuário tem permissão para logar hoje, com base nas regras de licença.
   canUserLogin(user: any): { allowed: boolean, reason?: string } {
     // Usuários fixos sempre podem logar
     if (!user.isFixed) {
@@ -36,6 +38,9 @@ export class LicenseService {
 
     return { allowed: true };
   }
+
+  //Essse método tem o objetivo de :
+  //Registrar o login do usuário se ainda não tiver sido registrado hoje.
 
   registerLogin(user: any): void {
     const loginHistory = this.getLoginHistory();
