@@ -46,19 +46,6 @@ src/<br>
    - Cada usuário pode fazer múltiplos logins no mesmo dia (contando como 1 licença)
    - Bloqueio automático quando o limite é atingido
 
-### Diagrama de Fluxo
-
-```mermaid
-graph TD
-    A[Login] --> B{Licença Fixa?}
-    B -->|Sim| C[Acesso Liberado]
-    B -->|Não| D{Novo Usuário Hoje?}
-    D -->|Sim| E[Acesso Liberado]
-    D -->|Não| F{Limite Atingido?}
-    F -->|Não| G[Registra Login]
-    F -->|Sim| H[Acesso Negado]
-```
-
 🚀 Como Executar
 Pré-requisitos
 Node.js 18+
@@ -97,25 +84,35 @@ private readonly MAX_DYNAMIC_LICENSES = 10; // Altere o limite máximo
 private readonly LOGIN_HISTORY_KEY = 'loginHistory'; // Chave do localStorage
 ```
 # Documentação breve
-🔐 Armazenamento
+#🔐 Armazenamento
 users: Lista de usuários cadastrados
 
 loginHistory: Registro de logins diários
 
 loggedInUser: Usuário atualmente logado
 
-🎨 Componentes
-LoginComponent
-Valida credenciais
+##🎨 Componentes
+#LoginComponent
+-Valida credenciais
+-Aplica regras de licenciamento
+-Redireciona para registro após login
 
-Aplica regras de licenciamento
+#RegisterComponent
+-CRUD completo de usuários
+-Visualização de licenças utilizadas
+-Validação de formulários
 
-Redireciona para registro após login
 
-RegisterComponent
-CRUD completo de usuários
+### Diagrama de Fluxo
 
-Visualização de licenças utilizadas
-
-Validação de formulários
+```mermaid
+graph TD
+    A[Login] --> B{Licença Fixa?}
+    B -->|Sim| C[Acesso Liberado]
+    B -->|Não| D{Novo Usuário Hoje?}
+    D -->|Sim| E[Acesso Liberado]
+    D -->|Não| F{Limite Atingido?}
+    F -->|Não| G[Registra Login]
+    F -->|Sim| H[Acesso Negado]
+```
 <div align="center"> <sub>Desenvolvido com ❤️ por Sarolanda</sub> </div> 
