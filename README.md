@@ -68,18 +68,23 @@ Angular CLI 19+
 1. Instalação
 Clone o repositório:
 
+```ruby
 git clone https://github.com/seu-usuario/controle-licencas.git
+```
 cd controle-licencas
 
 2. Instale as dependências:
 
-bash
-npm install
+```ruby
+rubynpm install
+```
 
 3. Execute a aplicação:
 
 bash
+```ruby
 ng serve
+```
 
 4. Acesse no navegador:
 
@@ -87,6 +92,8 @@ http://localhost:4200
 
 🛠️ Configurações
 Edite o arquivo src/app/services/license.service.ts para ajustar:
+```ruby
 private readonly MAX_DYNAMIC_LICENSES = 10; // Altere o limite máximo
 private readonly LOGIN_HISTORY_KEY = 'loginHistory'; // Chave do localStorage
+```
 <div align="center"> <sub>Desenvolvido com ❤️ por [Seu Nome]</sub> </div> 
