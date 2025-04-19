@@ -58,3 +58,34 @@ graph TD
     F -->|Não| G[Registra Login]
     F -->|Sim| H[Acesso Negado]
 
+
+🚀 Como Executar
+Pré-requisitos
+Node.js 18+
+
+Angular CLI 19+
+
+1. Instalação
+Clone o repositório:
+
+git clone https://github.com/seu-usuario/controle-licencas.git
+cd controle-licencas
+
+2. Instale as dependências:
+
+bash
+npm install
+
+3. Execute a aplicação:
+
+bash
+ng serve
+
+4. Acesse no navegador:
+
+http://localhost:4200
+
+🛠️ Configurações
+Edite o arquivo src/app/services/license.service.ts para ajustar:
+
+<div align="center"> <sub>Desenvolvido com ❤️ por [Seu Nome]</sub> </div> ```
