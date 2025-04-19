@@ -83,21 +83,21 @@ Edite o arquivo src/app/services/license.service.ts para ajustar:
 private readonly MAX_DYNAMIC_LICENSES = 10; // Altere o limite máximo
 private readonly LOGIN_HISTORY_KEY = 'loginHistory'; // Chave do localStorage
 ```
-# Documentação breve
-#🔐 Armazenamento
+ Documentação breve
+🔐 Armazenamento
 users: Lista de usuários cadastrados
 
 loginHistory: Registro de logins diários
 
 loggedInUser: Usuário atualmente logado
 
-##🎨 Componentes
-#LoginComponent
+🎨 Componentes
+LoginComponent
 -Valida credenciais
 -Aplica regras de licenciamento
 -Redireciona para registro após login
 
-#RegisterComponent
+RegisterComponent
 -CRUD completo de usuários
 -Visualização de licenças utilizadas
 -Validação de formulários
