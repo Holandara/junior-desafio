@@ -21,6 +21,7 @@ import { HeaderComponent } from "../header/header.component";
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [MessageService]
+  
 })
 export class RegisterComponent {
   title = 'desafio-junior';
@@ -111,6 +112,7 @@ export class RegisterComponent {
     this.visible = false;//fecha diálog de registro
     this.users = users;//Atualiza tabela em tempo real
     this.profileForm.get('username')?.updateValueAndValidity();//Atualiza validators
+    
 
   }
   visible: boolean = false; //Determina o dialog de registro como invisível assim que entra na página
