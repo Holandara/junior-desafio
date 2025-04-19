@@ -1,6 +1,9 @@
-<div class="h-screen  flex items-center justify-center bg-white-100">    
+<div class="h-screen  flex items-center justify-center bg-white-100">
+    <div class="h-screen flex items-center justify-center bg-white-100"> 
+        <!-- Mensagem de erro de login -->
+        <p-toast></p-toast> 
             <div class="h-fit items-center justify-center gap-3 ">
-                <img class="ml-10 flex flex-col  gap-2 items-center justify-center align-middle h-40 w-40"src="/logodigi.png">
+                <img alt="logo" class="ml-10 flex flex-col  gap-2 items-center justify-center align-middle h-40 w-40"src="/logodigi.png">
                 <div class="font-sans flex flex-col gap-2 mb-5 justify-items-center text-center text-3xl p-3 text-blue" style="font-family: Montserrat Alternates">
                     Bem Vindo!
                 </div>
@@ -8,45 +11,41 @@
                 <!-- LOGIN-->
                 <form [formGroup]="loginForm">
 
-                <div class="flex flex-col gap-2 mb-5 drop-shadow shadow-lg">
-                    <p-iconfield>
-                        <p-inputicon class="pi pi-user" style="color: #3F3E3E"/>
-                        <input style="color: #3F3E3E" pInputText placeholder="Usuário" formControlName="Name" />
-                            
-                        </p-iconfield>
-                    </div>
-
-                    <div class="flex flex-col gap-2 shadow-lg drop-shadow" >
+                    <div class="relative z-0 flex flex-col gap-2 mb-5 drop-shadow shadow-lg">
                         <p-iconfield>
-                            <p-inputicon class="pi pi-lock "style="color: #3F3E3E" />
-                            <input style="color: #3F3E3E" type="password" id="password" pInputText placeholder="Senha" formControlName="password" />
-                        </p-iconfield>
+                            <p-inputicon class="pi pi-user" style="color: #3F3E3E"/>
+                            <input style="color: #3F3E3E" pInputText placeholder="Usuário" formControlName="Name" />
+                                
+                            </p-iconfield>
+                        </div>
+    
+                        <div class="flex flex-col gap-2 shadow-lg drop-shadow" >
+                            <p-iconfield>
+                                <p-inputicon class="pi pi-lock "style="color: #3F3E3E" />
+                                <input style="color: #3F3E3E" type="password" id="password" pInputText placeholder="Senha" formControlName="password" />
+                            </p-iconfield>
+                        </div>
+    
+                        <div *ngIf="Name?.errors?.['required'] || password?.errors?.['required']"
+                            class="mt-3 text-sm text-danger">
+                            ⓘ Por favor preencha todos <br>os campos
+                        </div>
+                        <div class=" z-20 mt-2 flex flex-col gap-2 text-gray-900 mt-5 shadow-lg drop-shadow">
+                            <p-datepicker  appendTo="body"  showIcon iconDisplay="input" placeholder="Data de Acesso"/>
+                        </div>
+                        <div class="z-10 flex flex-col gap-2 pt-4 mt-5">
+                            <button iconPosition="left" 
+                                    (click)="onSubmit()"
+                                    [ngClass]="{
+                                          
+                                        'bg-gray-300 cursor-not-allowed': loginForm.invalid  
+                                      }"
+                                    [disabled]="loginForm.invalid"         
+                                    class=" shadow-lg drop-shadow cursor-pointer border-1 hover:bg-blend-hard-light  bg-gradient-to-r from-blue to-green shadow-xl rounded-xl text-xl font-medium p-2 text-white">
+                                Entrar
+                            </button>
+                            <div class="font-sans flex flex-col gap-2 mb-5 justify-items-center text-center  mt-5 font-extralight">Esqueci minha senha</div>
                     </div>
-
-                    <div *ngIf="loginError"
-                        class="mt-3 text-sm text-danger">
-                        ⓘ Email ou senha inválidos
-                    </div>
-                    <div *ngIf="Name?.errors?.['required'] || password?.errors?.['required']"
-                        class="mt-3 text-sm text-danger">
-                        ⓘ Por favor preencha todos <br>os campos
-                    </div>
-                    <div class="mt-2 flex flex-col gap-2 text-gray-900 mt-5 shadow-lg drop-shadow">
-                        <p-datepicker showIcon iconDisplay="input" placeholder="Data de Acesso"/>
-                    </div>
-                    <div class="flex flex-col gap-2 pt-4 mt-5">
-                        <button iconPosition="left" 
-                                (click)="login()"
-                                [ngClass]="{
-                                      
-                                    'bg-gray-300 cursor-not-allowed': loginForm.invalid  
-                                  }"
-                                [disabled]="loginForm.invalid"         
-                                class="shadow-lg drop-shadow cursor-pointer border-1 hover:bg-blend-hard-light  bg-gradient-to-r from-blue to-green shadow-xl rounded-xl text-xl font-medium p-2 text-white">
-                            Entrar
-                        </button>
-                        <div class="font-sans flex flex-col gap-2 mb-5 justify-items-center text-center  mt-5 font-extralight">Esqueci minha senha</div>
-                </div>
             </form>
             </div>
         </div>    
