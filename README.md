@@ -85,15 +85,15 @@ src/<br>
    - Bloqueio automático quando o limite é atingido
 
 
- Documentação breve
-🔐 Armazenamento
+ Documentação breve<br>
+🔐 Armazenamento<br>
 users: Lista de usuários cadastrados
 
 loginHistory: Registro de logins diários
 
 loggedInUser: Usuário atualmente logado
 
-🎨 Componentes
+🎨 Componentes<br>
 LoginComponent
 -Valida credenciais
 -Aplica regras de licenciamento
