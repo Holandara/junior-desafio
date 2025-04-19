@@ -87,5 +87,6 @@ http://localhost:4200
 
 🛠️ Configurações
 Edite o arquivo src/app/services/license.service.ts para ajustar:
-
+private readonly MAX_DYNAMIC_LICENSES = 10; // Altere o limite máximo
+private readonly LOGIN_HISTORY_KEY = 'loginHistory'; // Chave do localStorage
 <div align="center"> <sub>Desenvolvido com ❤️ por [Seu Nome]</sub> </div> 
