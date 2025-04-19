@@ -57,7 +57,7 @@ graph TD
     D -->|Não| F{Limite Atingido?}
     F -->|Não| G[Registra Login]
     F -->|Sim| H[Acesso Negado]
-
+```
 
 🚀 Como Executar
 Pré-requisitos
@@ -88,4 +88,4 @@ http://localhost:4200
 🛠️ Configurações
 Edite o arquivo src/app/services/license.service.ts para ajustar:
 
-<div align="center"> <sub>Desenvolvido com ❤️ por [Seu Nome]</sub> </div> ```
+<div align="center"> <sub>Desenvolvido com ❤️ por [Seu Nome]</sub> </div> 
