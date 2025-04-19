@@ -30,14 +30,14 @@ Angular CLI 19+
 Clone o repositório:
 
 ```ruby
-git clone https://github.com/seu-usuario/controle-licencas.git
+git clone https://github.com/holandara/junior-desafio.git
 ```
 cd controle-licencas
 
 2. Instale as dependências:
 
 ```ruby
-rubynpm install
+npm install
 ```
 
 3. Execute a aplicação:
