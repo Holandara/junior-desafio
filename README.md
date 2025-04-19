@@ -1,59 +1,60 @@
-# AngularEcomm
+# Sistema de Controle de Licenças de Acesso
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+![Angular](https://img.shields.io/badge/Angular-19-DD0031?logo=angular)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-14.0.0-1976D2?logo=prime)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.0-06B6D4?logo=tailwind-css)
 
-## Development server
+Sistema CRUD com controle de acesso baseado em licenças dinâmicas e fixas, desenvolvido com Angular 19, PrimeNG e TailwindCSS.
 
-To start a local development server, run:
+## 📌 Visão Geral
 
-```bash
-ng serve
-```
+Este projeto implementa um sistema de controle de acesso com dois tipos de usuários:
+- **Licença Fixa**: Acesso ilimitado
+- **Licença Dinâmica**: Acesso controlado por limites diários
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ✨ Funcionalidades
 
-## Code scaffolding
+- Cadastro de usuários (CRUD completo)
+- Controle de login com regras de licenciamento
+- Visualização em tempo real de licenças utilizadas
+- Interface responsiva e moderna
+- Armazenamento local (localStorage)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 📚 Documentação Técnica
 
-```bash
-ng generate component component-name
-```
+### Estrutura do Projeto
+src/
+├── app/
+│ ├── components/
+│ │ ├── login/ # Componente de login
+│ │ └── register/ # Componente de registro
+│ ├── services/
+│ │ └── license.service.ts # Lógica de controle de licenças
+│ └── validators/ # Validadores customizados
+├── assets/ # Recursos estáticos
+└── styles/ # Estilos globais
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
+### Regras de Negócio
 
-## Building
+1. **Licenças Fixas**:
+   - Acesso ilimitado
+   - Sem restrições de login
 
-To build the project run:
+2. **Licenças Dinâmicas**:
+   - Máximo de 10 usuários distintos por dia (configurável)
+   - Cada usuário pode fazer múltiplos logins no mesmo dia (contando como 1 licença)
+   - Bloqueio automático quando o limite é atingido
 
-```bash
-ng build
-```
+### Diagrama de Fluxo
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+```mermaid
+graph TD
+    A[Login] --> B{Licença Fixa?}
+    B -->|Sim| C[Acesso Liberado]
+    B -->|Não| D{Novo Usuário Hoje?}
+    D -->|Sim| E[Acesso Liberado]
+    D -->|Não| F{Limite Atingido?}
+    F -->|Não| G[Registra Login]
+    F -->|Sim| H[Acesso Negado]
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
