@@ -23,16 +23,16 @@ Este projeto implementa um sistema de controle de acesso com dois tipos de usuá
 ## 📚 Documentação Técnica
 
 ### Estrutura do Projeto
-src/
-├── app/
-│ ├── components/
-│ │ ├── login/ # Componente de login
-│ │ └── register/ # Componente de registro
-│ ├── services/
-│ │ └── license.service.ts # Lógica de controle de licenças
-│ └── validators/ # Validadores customizados
-├── assets/ # Recursos estáticos
-└── styles/ # Estilos globais
+src/<br>
+├── app/<br>
+│ ├── components/<br>
+│ │ ├── login/ # Componente de login<br>
+│ │ └── register/ # Componente de registro<br>
+│ ├── services/<br>
+│ │ └── license.service.ts # Lógica de controle de licenças<br>
+│ └── validators/ # Validadores customizados<br>
+├── assets/ # Recursos estáticos<br>
+└── styles/ # Estilos globais<br>
 
 
 ### Regras de Negócio
@@ -96,4 +96,26 @@ Edite o arquivo src/app/services/license.service.ts para ajustar:
 private readonly MAX_DYNAMIC_LICENSES = 10; // Altere o limite máximo
 private readonly LOGIN_HISTORY_KEY = 'loginHistory'; // Chave do localStorage
 ```
-<div align="center"> <sub>Desenvolvido com ❤️ por [Seu Nome]</sub> </div> 
+# Documentação breve
+🔐 Armazenamento
+users: Lista de usuários cadastrados
+
+loginHistory: Registro de logins diários
+
+loggedInUser: Usuário atualmente logado
+
+🎨 Componentes
+LoginComponent
+Valida credenciais
+
+Aplica regras de licenciamento
+
+Redireciona para registro após login
+
+RegisterComponent
+CRUD completo de usuários
+
+Visualização de licenças utilizadas
+
+Validação de formulários
+<div align="center"> <sub>Desenvolvido com ❤️ por Sarolanda</sub> </div> 
