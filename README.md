@@ -20,33 +20,7 @@ Este projeto implementa um sistema de controle de acesso com dois tipos de usuá
 - Interface responsiva e moderna
 - Armazenamento local (localStorage)
 
-## 📚 Documentação Técnica
-
-### Estrutura do Projeto
-src/<br>
-├── app/<br>
-│ ├── components/<br>
-│ │ ├── login/ # Componente de login<br>
-│ │ └── register/ # Componente de registro<br>
-│ ├── services/<br>
-│ │ └── license.service.ts # Lógica de controle de licenças<br>
-│ └── validators/ # Validadores customizados<br>
-├── assets/ # Recursos estáticos<br>
-└── styles/ # Estilos globais<br>
-
-
-### Regras de Negócio
-
-1. **Licenças Fixas**:
-   - Acesso ilimitado
-   - Sem restrições de login
-
-2. **Licenças Dinâmicas**:
-   - Máximo de 10 usuários distintos por dia (configurável)
-   - Cada usuário pode fazer múltiplos logins no mesmo dia (contando como 1 licença)
-   - Bloqueio automático quando o limite é atingido
-
-🚀 Como Executar
+###  🚀 Como Executar
 Pré-requisitos
 Node.js 18+
 
@@ -83,6 +57,34 @@ Edite o arquivo src/app/services/license.service.ts para ajustar:
 private readonly MAX_DYNAMIC_LICENSES = 10; // Altere o limite máximo
 private readonly LOGIN_HISTORY_KEY = 'loginHistory'; // Chave do localStorage
 ```
+
+## 📚 Documentação Técnica
+
+### Estrutura do Projeto
+src/<br>
+├── app/<br>
+│ ├── components/<br>
+│ │ ├── login/ # Componente de login<br>
+│ │ └── register/ # Componente de registro<br>
+│ ├── services/<br>
+│ │ └── license.service.ts # Lógica de controle de licenças<br>
+│ └── validators/ # Validadores customizados<br>
+├── assets/ # Recursos estáticos<br>
+└── styles/ # Estilos globais<br>
+
+
+### Regras de Negócio
+
+1. **Licenças Fixas**:
+   - Acesso ilimitado
+   - Sem restrições de login
+
+2. **Licenças Dinâmicas**:
+   - Máximo de 10 usuários distintos por dia (configurável)
+   - Cada usuário pode fazer múltiplos logins no mesmo dia (contando como 1 licença)
+   - Bloqueio automático quando o limite é atingido
+
+
  Documentação breve
 🔐 Armazenamento
 users: Lista de usuários cadastrados
