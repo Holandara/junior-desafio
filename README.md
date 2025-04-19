@@ -32,7 +32,7 @@ Clone o repositório:
 ```ruby
 git clone https://github.com/holandara/junior-desafio.git
 ```
-cd controle-licencas
+```cd junior-desafio```
 
 2. Instale as dependências:
 
