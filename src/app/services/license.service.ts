@@ -1,16 +1,17 @@
+// src/app/services/license.service.ts
 import { Injectable } from '@angular/core';
+import { CurrentDateService } from './current-date.service';
 
 @Injectable({
-  providedIn: 'root'//permite reutilização pois está declarado globalmente
+  providedIn: 'root'
 })
 export class LicenseService {
-  private readonly MAX_DYNAMIC_LICENSES = 1; // Máximo de usuários dinâmicos distintos por dia
+  private readonly MAX_DYNAMIC_LICENSES = 1;
   private readonly LOGIN_HISTORY_KEY = 'loginHistory';
 
+  constructor(private dateService: CurrentDateService) {}
 
-  //Esse método verifica se o usuário tem permissão para logar hoje, com base nas regras de licença.
   canUserLogin(user: any): { allowed: boolean, reason?: string } {
-    // Usuários fixos sempre podem logar
     if (!user.isFixed) {
       return { allowed: true };
     }
@@ -20,17 +21,14 @@ export class LicenseService {
       login => login.userName === user.Name
     );
 
-    // Se já logou hoje, permite (não consome nova licença)
     if (userAlreadyLoggedToday) {
       return { allowed: true };
     }
 
-    // Conta usuários dinâmicos distintos que já logaram hoje
     const uniqueDynamicUsersToday = this.countUniqueDynamicUsersToday(todayLogins);
-    
-    // Verifica se ainda há licenças disponíveis
+
     if (uniqueDynamicUsersToday >= this.MAX_DYNAMIC_LICENSES) {
-      return { 
+      return {
         allowed: false,
         reason: `Limite de ${this.MAX_DYNAMIC_LICENSES} usuários dinâmicos atingido hoje.`
       };
@@ -39,25 +37,23 @@ export class LicenseService {
     return { allowed: true };
   }
 
-  //Essse método tem o objetivo de :
-  //Registrar o login do usuário se ainda não tiver sido registrado hoje.
-
   registerLogin(user: any): void {
     const loginHistory = this.getLoginHistory();
-    
-    // Só registra o primeiro login do usuário no dia
-    const userAlreadyLoggedToday = loginHistory.some(
-      login => login.userName === user.Name && 
-              login.date === this.getCurrentDateString()
+
+    const today = this.dateService.getToday();
+    const alreadyLogged = loginHistory.some(
+      login => login.userName === user.Name &&
+               login.date === today
     );
 
-    if (!userAlreadyLoggedToday) {
+    if (!alreadyLogged) {
       loginHistory.push({
         userName: user.Name,
-        date: this.getCurrentDateString(),
+        date: today,
         isDynamic: user.isFixed,
-        timestamp: new Date().toISOString()
+        timestamp: this.dateService.getNow().toISOString()
       });
+
       localStorage.setItem(this.LOGIN_HISTORY_KEY, JSON.stringify(loginHistory));
     }
   }
@@ -68,21 +64,14 @@ export class LicenseService {
 
   private getTodayLogins(): any[] {
     return this.getLoginHistory().filter(
-      login => login.date === this.getCurrentDateString()
+      login => login.date === this.dateService.getToday()
     );
   }
 
   private countUniqueDynamicUsersToday(logins: any[]): number {
     const dynamicUsers = new Set(
-      logins
-        .filter(login => login.isDynamic)
-        .map(login => login.userName)
+      logins.filter(login => login.isDynamic).map(login => login.userName)
     );
     return dynamicUsers.size;
-  }
-
-  private getCurrentDateString(): string {
-    const date = new Date();
-    return date.toISOString().split('T')[0]; // Formato YYYY-MM-DD
   }
 }

@@ -31,7 +31,12 @@
                             ⓘ Por favor preencha todos <br>os campos
                         </div>
                         <div class=" z-20 mt-2 flex flex-col gap-2 text-gray-900 mt-5 shadow-lg drop-shadow">
-                            <p-datepicker  appendTo="body"  showIcon iconDisplay="input" placeholder="Data de Acesso"/>
+                            <p-datepicker 
+                            inputId="loginDate" 
+                            formControlName="loginDate" 
+                            showIcon="true" 
+                            dateFormat="dd/mm/yy"
+                            ></p-datepicker>
                         </div>
                         <div class="z-10 flex flex-col gap-2 pt-4 mt-5">
                             <button iconPosition="left" 

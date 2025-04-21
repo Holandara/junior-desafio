@@ -26,7 +26,7 @@ import { ToastModule } from 'primeng/toast';
     CommonModule, MessageModule, ToastModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [MessageService] 
 })
@@ -35,6 +35,7 @@ export class LoginComponent {
   loginForm = new FormGroup({
     Name: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
+    loginDate: new FormControl(new Date(), [Validators.required]),
   });
 
   users: User[] = [];
@@ -52,11 +53,18 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const name = this.loginForm.value.Name;
       const password = this.loginForm.value.password;
+      const selectedDate = this.loginForm.value.loginDate;
+  
       const user = this.users.find(u => u.Name === name && u.password === password);
   
       if (user) {
+        // ✅ SALVA A DATA SIMULADA ANTES DA VALIDAÇÃO
+        if (selectedDate) {
+          localStorage.setItem('simulatedDate', new Date(selectedDate).toISOString().split('T')[0]);
+        }
+  
         const loginCheck = this.licenseService.canUserLogin(user);
-        
+  
         if (loginCheck.allowed) {
           this.licenseService.registerLogin(user);
           this.handleSuccessfulLogin(user);
@@ -69,9 +77,18 @@ export class LoginComponent {
     }
   }
   
+  
   private handleSuccessfulLogin(user: User) {
     localStorage.setItem('loggedInUser', JSON.stringify(user));
+    const selectedDate = this.loginForm.value.loginDate;
+    if (selectedDate) {
+      localStorage.setItem('simulatedDate', new Date(selectedDate).toISOString().split('T')[0]);
+
+      this.loadDate();
+    }
+
     this.router.navigate(['/registro']);
+
   }
   
   private showLoginError(message: string) {
@@ -86,6 +103,13 @@ export class LoginComponent {
   loadUsers() {
     const usersFromStorage = localStorage.getItem('users');
     this.users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
+  }
+
+  loadDate() {
+    const date = localStorage.getItem('simulatedDate');
+    if (date) {
+      console.log('Data simulada carregada:', date);
+    }
   }
 
   get Name() {
