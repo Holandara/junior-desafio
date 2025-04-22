@@ -30,14 +30,17 @@ export class CustomValidators {
 
     // Validação de caracteres e espaços
     const valid = hasOnlyAlphanumeric && !hasSpaces;
-
+    const validChars = hasOnlyAlphanumeric && !hasSpaces;
     
     // Se o nome for inválido ou já existir, retorna erro
     
-    if (!valid) {
-      return { namePattern: true }; // Nome não é alfanumérico ou contém espaços
+    if (nameExists) {
+      return { nameExists: true }; // Nome já existe
     }
     
+    if (!validChars) {
+      return { namePattern: true }; // Nome não é alfanumérico ou contém espaços
+    }
     return null; // Nome válido e único
   }
 }

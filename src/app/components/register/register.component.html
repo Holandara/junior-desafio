@@ -142,6 +142,9 @@
         <div *ngIf="Name?.errors?.['namePattern']" class="text-sm text-red-600 mt-1">
           ⓘ O nome deve ser alfanumérico.
         </div>
+        <div *ngIf="Name?.errors?.['nameExists']" class="text-sm text-red-600 mt-1">
+          ⓘ Este nome de usuário já está em uso.
+        </div>
       </div>
   
       <!-- E-mail -->
