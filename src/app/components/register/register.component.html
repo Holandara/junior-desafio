@@ -3,17 +3,17 @@
  <app-header></app-header>
  <p-toast></p-toast>
 
-<div class="relative py-5 px-10 justify-end "> 
+<div class="relative py-5 px-10 justify-end bg-background-100"> 
   
- <div ><i (click)="showDialog()"  pTooltip="Cadastrar novo usuário" tooltipEvent="hover"style="font-size: 1rem" class="pi pi-plus rounded-full bg-blue text-white p-4 cursor-pointer hover:bg-green delay-150 transition ease-in-out duration-300"></i> </div>
+ <div ><i (click)="showDialog()"  pTooltip="Cadastrar novo usuário" tooltipEvent="hover"style="font-size: 1rem" class="shadow-md pi pi-plus rounded-full bg-blue text-white p-4 cursor-pointer hover:bg-green delay-150 transition ease-in-out duration-300"></i> </div>
 </div>
-
+<div class="bg-background-100 h-screen">
   <div class=" relative px-10 mx-auto flex flex-wrap gap-5  rounded-lg ">  
-    <p-table [value]="users" [rowHover]="true" class="w- md:w-2/3 text-sm text-left text-gray-500 shadow-md">
+    <p-table [value]="users" [rowHover]="true" class="w- md:w-2/3 text-sm text-left text-gray-500 shadow-md ">
       
       <!-- Cabeçalho -->
-      <ng-template pTemplate="header">
-        <tr class="text-xs text-gray-700 uppercase bg-gray-100">
+      <ng-template pTemplate="header" >
+        <tr class="text-xs text-gray-700 uppercase bg-gray-100 rounded-2xl">
           <th class="px-6 py-4 font-medium" pSortableColumn="Name">
             Nome
             <p-sortIcon field="Name" />
@@ -40,7 +40,14 @@
       <ng-template pTemplate="body" let-user>
         <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 transition-all duration-200 ease-in-out">
           <td class="px-6 py-4 text-gray-900 font-medium whitespace-nowrap">
+            
+            {{ user.Name }}
             <ng-container *ngIf="user.isFixed && hasUserLoggedToday(user.Name)">
+              <span 
+                class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full ml-2"
+                pTooltip="Já utilizou a licença hoje"
+              >
+                <ng-container *ngIf="user.isFixed && hasUserLoggedToday(user.Name)">
               <span 
                 class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full ml-2"
                 pTooltip="Já utilizou a licença hoje"
@@ -49,8 +56,8 @@
                 Hoje
               </span>
             </ng-container>
-            {{ user.Name }}
-            
+              </span>
+            </ng-container>
           </td>
           <td class="px-6 py-4">
             {{ user.cpf }}
@@ -88,14 +95,14 @@
     </p-table>
     <!-- USUÁRIOS FIXOS -->
     <div class="relative p-5 mx-auto w-full md:w-fit rounded-lg ">
-      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2">
+      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 bg-white">
         <p class="py-2 px-2 justify-self-start-safe">Usuários Fixos</p>
         <span class="align-items justify-self-end-safe grid-row-2 pi pi-lock text-white bg-green rounded-full p-4"></span>
         <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ fixedUsersCount }}</span></div>
       </div>
       
       
-      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 mt-10 ">
+      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 mt-10 bg-white ">
         <p class="py-0 px-2 justify-self-start-safe inline">Usuários Dinâmicos</p>
         <span class="align-items justify-self-end-safe grid-row-2 pi pi-history text-white bg-orange-400 rounded-full p-4"></span>
         <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ dinamicUsersCount }}</span></div>
@@ -182,4 +189,4 @@
       </button>
     </form>
   </p-dialog>
-  
+</div>

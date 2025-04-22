@@ -11,18 +11,18 @@
                 <!-- LOGIN-->
                 <form [formGroup]="loginForm">
 
-                    <div class="relative z-0 flex flex-col gap-2 mb-5 drop-shadow shadow-lg">
+                    <div class="relative z-0 flex flex-col mb-5 drop-shadow-md">
                         <p-iconfield>
                             <p-inputicon class="pi pi-user" style="color: #3F3E3E"/>
-                            <input style="color: #3F3E3E" pInputText placeholder="Usuário" formControlName="Name" />
+                            <input class= "w-full" style="color: #3F3E3E" pInputText placeholder="Usuário" formControlName="Name" />
                                 
                             </p-iconfield>
                         </div>
     
-                        <div class="flex flex-col gap-2 shadow-lg drop-shadow" >
+                        <div class="flex flex-col drop-shadow-md" >
                             <p-iconfield>
                                 <p-inputicon class="pi pi-lock "style="color: #3F3E3E" />
-                                <input style="color: #3F3E3E" type="password" id="password" pInputText placeholder="Senha" formControlName="password" />
+                                <input class= "w-full" style="color: #3F3E3E" type="password" id="password" pInputText placeholder="Senha" formControlName="password" />
                             </p-iconfield>
                         </div>
     
@@ -30,7 +30,7 @@
                             class="mt-3 text-sm text-danger">
                             ⓘ Por favor preencha todos <br>os campos
                         </div>
-                        <div class=" z-20 mt-2 flex flex-col gap-2 text-gray-900 mt-5 shadow-lg drop-shadow">
+                        <div class="w-full z-20 flex flex-col  text-gray-900 mt-5 drop-shadow">
                             <p-datepicker 
                             inputId="loginDate" 
                             formControlName="loginDate" 
@@ -49,9 +49,9 @@
                                     class=" shadow-lg drop-shadow cursor-pointer border-1 hover:bg-blend-hard-light  bg-gradient-to-r from-blue to-green shadow-xl rounded-xl text-xl font-medium p-2 text-white">
                                 Entrar
                             </button>
-                            <div class="font-sans flex flex-col gap-2 mb-5 justify-items-center text-center  mt-5 font-extralight">Esqueci minha senha</div>
+                            <div class="font-sans flex flex-col gap-2 mb-5 justify-items-center text-center  mt-5 font-extralight hover:cursor-pointer">Esqueci minha senha</div>
                     </div>
-            </form>
+                </form>
             </div>
         </div>    
      

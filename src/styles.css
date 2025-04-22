@@ -8,6 +8,7 @@
 html, body {
   font-family:Montserrat;
 }
+
 @theme {
     --color-blue: #068a8f;
     --color-green: #71B66F;
@@ -27,6 +28,7 @@ html, body {
     --color-orange-100: #ffedd5;
     --color-white-100: #F8F9FA;
     --color-stroke-100: #DBE2EC;
+    --color-background-100: #f8f9fa;
 
     --radius-xl: 0.625rem;
 }

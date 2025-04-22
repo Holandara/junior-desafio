@@ -5,10 +5,11 @@ import { TooltipModule } from 'primeng/tooltip';
   imports: [TooltipModule],
   standalone: true,
   template: `
-  <div class="header bg-slate-100 w-full px-4 py-3 shadow-md justify-between flex items-center">
+  <div class="header bg-white line  w-full px-4 py-3 shadow-md justify-between flex items-center">
       <span  class="px-5 text-xl  font-bold bg-gradient-to-r from-blue to-green inline-block text-transparent bg-clip-text">Gestão de usuários</span>
       
   </div>
+  <div class="h-1 w-1"></div>
   `,
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
