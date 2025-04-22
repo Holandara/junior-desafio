@@ -69,6 +69,7 @@ src/<br>
 │ │ └── register/ # Componente de registro<br>
 │ ├── services/<br>
 │ │ └── license.service.ts # Lógica de controle de licenças<br>
+| | └── current-date.service.ts # Lógica de controle de datas<br>
 │ └── validators/ # Validadores customizados<br>
 ├── assets/ # Recursos estáticos<br>
 └── styles/ # Estilos globais<br>
