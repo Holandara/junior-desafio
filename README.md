@@ -26,11 +26,11 @@ Node.js 18+
 
 Angular CLI 19+
 
-1. Instalação
+1. Instalação<br>
 Clone o repositório:
 
 ```ruby
-git clone https://github.com/holandara/junior-desafio.git
+git clone https://github.com/Holandara/junior-desafio.git
 ```
 ```cd junior-desafio```
 
