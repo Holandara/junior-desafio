@@ -16,6 +16,7 @@ import { MessageModule } from 'primeng/message';
 import { LicenseService } from '../../services/license.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [
     RouterModule, DividerModule, ButtonModule, InputTextModule, CardModule, 
     ReactiveFormsModule, DatePickerModule, InputIconModule, IconFieldModule, 
-    CommonModule, MessageModule, ToastModule
+    CommonModule, MessageModule, ToastModule, DialogModule
   ],
   templateUrl: './login.component.html',
   
@@ -49,6 +50,12 @@ export class LoginComponent {
     this.loadUsers();
   }
 
+  
+  visible: boolean = false; // Sets dialog invisible by default
+  
+  showDialog() {
+    this.visible = true;
+  }
   onSubmit() {
     if (this.loginForm.valid) {
       const name = this.loginForm.value.Name;
@@ -119,6 +126,8 @@ export class LoginComponent {
   get password() {
     return this.loginForm.get('password');
   }
+ 
+ 
 }
 
 interface User {

@@ -33,12 +33,11 @@ export class CustomValidators {
 
     
     // Se o nome for inválido ou já existir, retorna erro
+    
     if (!valid) {
       return { namePattern: true }; // Nome não é alfanumérico ou contém espaços
     }
-    if (nameExists) {
-      return { nameExists: true }; // Nome já existe no localStorage
-    }
+    
     return null; // Nome válido e único
   }
 }

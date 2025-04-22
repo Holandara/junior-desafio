@@ -9,7 +9,7 @@ import { PrimeIcons, MenuItem } from 'primeng/api';
   imports: [TooltipModule, RouterModule],
   standalone: true,
   template: `
-  <div class="header bg-white line w-screen md:w-full px-4 py-3 shadow-md justify-between flex items-center">
+  <div class="header bg-white line w-screen md:w-full  px-4 py-3 shadow-md justify-between flex items-center">
       <span  class="px-5 text-xl  font-bold bg-gradient-to-r from-blue to-green inline-block text-transparent bg-clip-text">Gestão de usuários</span>
       <span class="px-5 text-xl  font-bold bg-gradient-to-r text-blue hover:cursos-pointer">
       <i  class="pi pi-user pr-7" ></i>

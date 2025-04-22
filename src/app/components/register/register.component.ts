@@ -29,7 +29,7 @@ export class RegisterComponent {
   title = 'desafio-junior';
   isNewUser: boolean = false;
 
-  // Usando reactive forms para validação de campo
+  // Reactive Forms validators config
   profileForm = new FormGroup({
     Name: new FormControl('', [
       Validators.required,
@@ -49,7 +49,6 @@ export class RegisterComponent {
 
   users: User[] = [];
 
-  //Ideia de UI 
   loggedDynamicUsersToday = 0;
   readonly MAX_DYNAMIC_LICENSES = 3;
 
@@ -57,14 +56,14 @@ export class RegisterComponent {
     this.loadUsers();
   }
 
-  // Obtém a data "atual" baseada na data simulada salva no login
+  //gets current date based on simulateddate and saves on login
   getToday(): string {
     const simulated = localStorage.getItem('simulatedDate');
     const date = simulated ? new Date(simulated) : new Date();
-    return date.toISOString().split('T')[0]; // formato: yyyy-mm-dd
+    return date.toISOString().split('T')[0]; // Foormat: yyyy-mm-dd
   }
 
-  // Carrega usuários e calcula quantos dinâmicos logaram na data atual
+  //Loads users and count how many dynamics logged in current date
   loadUsers() {
     const usersFromStorage = localStorage.getItem('users');
     this.users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
@@ -79,12 +78,7 @@ export class RegisterComponent {
     this.loggedDynamicUsersToday = new Set(dynamicUsersToday).size;
   }
 
-  // Muda tela quando clica no botão - temporário
-  changeView() {
-    this.isNewUser = !this.isNewUser;
-  }
-
-  // Para validação dos formulários reativos
+  // Reactive forms Validators
   get email() {
     return this.profileForm.get('email');
   }
@@ -97,17 +91,17 @@ export class RegisterComponent {
     return this.profileForm.get('password');
   }
 
-  // Conta usuários dinâmicos
+  // Count dynamic users
   get fixedUsersCount(): number {
     return this.users.filter(user => user.isFixed === false).length;
   }
 
-  // Conta usuários fixos
+  //Count fixed users
   get dinamicUsersCount(): number {
     return this.users.filter(user => user.isFixed === true).length;
   }
 
-  // Cria novo usuário e salva no localStorage
+  //Creates new users and saves in local storage
   createUser() {
     const newUser = this.profileForm.value as User;
 
@@ -117,7 +111,7 @@ export class RegisterComponent {
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
 
-    // Resetar o formulário após salvar
+    // resets form after submit
     this.profileForm.reset({
       Name: '',
       email: '',
@@ -126,13 +120,13 @@ export class RegisterComponent {
       isFixed: false
     });
 
-    this.visible = false; // Fecha dialog de registro
-    this.users = users; // Atualiza tabela em tempo real
-    this.profileForm.get('username')?.updateValueAndValidity(); // Atualiza validators
+    this.visible = false; // Closes dialog register by default
+    this.users = users; // Update table in real time
+    this.profileForm.get('username')?.updateValueAndValidity(); // Update validators
 
   }
 
-  visible: boolean = false; // Determina o dialog de registro como invisível assim que entra na página
+  visible: boolean = false; // Sets dialog invisible by default
 
   deleteUser(userToDelete: User) {
     const usersFromStorage = localStorage.getItem('users');
@@ -140,13 +134,15 @@ export class RegisterComponent {
 
     users = users.filter((user: User) => user.Name !== userToDelete.Name);
     localStorage.setItem('users', JSON.stringify(users));
-    this.users = users; // Atualiza lista exibida
+    this.users = users; //update list
+    this.loadUsers;
   }
 
-  // Mensagem de sucesso após criar usuário
   showDialog() {
     this.visible = true;
+    
   }
+  // Success message after creating user
 
   showSuccess() {
     this.messageService.add({
@@ -163,7 +159,7 @@ export class RegisterComponent {
     }
   }
 
-  // Verifica se o usuário dinâmico já logou hoje
+  // Verify if the dynamic user already logged in today
   hasUserLoggedToday(userName: string): boolean {
     const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
     const today = this.getToday();
@@ -174,6 +170,7 @@ export class RegisterComponent {
         login.date === today &&
         login.isDynamic
     );
+    this.loadUsers;
   }
 }
 

@@ -9,9 +9,9 @@
 </div>
 <div class="bg-background-100 h-screen">
   <div class=" relative px-10 mx-auto flex flex-wrap gap-5  rounded-lg ">  
-    <p-table [value]="users" [rowHover]="true" class="w- md:w-2/3 w-screen text-sm text-left text-gray-500 shadow-md ">
+    <p-table [value]="users" [rowHover]="true" class=" md:w-2/3 w-full text-sm text-left text-gray-500 shadow-md ">
       
-      <!-- Cabeçalho -->
+      <!-- table header -->
       <ng-template pTemplate="header" >
         <tr class="text-xs text-gray-700 uppercase bg-gray-100 rounded-2xl">
           <th class="px-6 py-4 font-medium" pSortableColumn="Name">
@@ -36,7 +36,7 @@
         </tr>
       </ng-template>
   
-      <!-- Corpo -->
+      <!-- Body -->
       <ng-template pTemplate="body" let-user>
         <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 transition-all duration-200 ease-in-out">
           <td class="px-6 py-4 text-gray-900 font-medium whitespace-nowrap">
@@ -88,12 +88,14 @@
       </ng-template>
   
     </p-table>
-    <!-- USUÁRIOS FIXOS -->
+
+    <!-- Fixed Users-->
     <div class="relative p-5 mx-auto w-full md:w-fit rounded-lg ">
       <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 bg-white">
-        <p class="py-2 px-2 justify-self-start-safe">Usuários Fixos</p>
+        <p class="py-0 px-2 justify-self-start-safe">Usuários Fixos</p>
         <span class="align-items justify-self-end-safe grid-row-2 pi pi-lock text-white bg-green rounded-full p-4"></span>
         <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ fixedUsersCount }}</span></div>
+        
       </div>
       
       
@@ -121,12 +123,12 @@
   <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
     <form [formGroup]="profileForm" class="max-w-sm mx-auto p-5 space-y-6" (ngSubmit)="handleSubmit()">
   
-      <!-- Título -->
+      <!-- Title -->
       <div class="text-center font-sans font-bold text-2xl text-transparent bg-gradient-to-r from-blue to-green inline-block bg-clip-text">
         Cadastro de novo usuário
       </div>
   
-      <!-- Nome -->
+      <!-- Name -->
       <div class="flex flex-col">
         <label for="nome" class="text-sm font-medium text-gray-700">Nome</label>
         <input type="text" id="name" formControlName="Name" placeholder="Nome" minlength="3"
@@ -159,7 +161,7 @@
           class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
       </div>
   
-      <!-- Senha -->
+      <!-- Password -->
       <div class="flex flex-col">
         <label for="password" class="text-sm font-medium text-gray-700">Senha</label>
         <input type="password" id="password" formControlName="password" pInputText placeholder="•••••••••"
@@ -174,17 +176,18 @@
         </ul>
       </div>
   
-      <!-- Fixo/Dinâmico -->
+      <!-- Fixed/DYnamic checkbox -->
       <div class="flex items-center space-x-3 mb-5">
         <input id="terms" type="checkbox" formControlName="isFixed" class="w-4 h-4 border border-blue rounded-sm bg-blue focus:ring-2 focus:ring-green" />
         <label for="terms" class="text-sm font-medium text-gray-600">Usuário é dinâmico?</label>
       </div>
   
-      <!-- Botão de envio -->
+      <!-- Submit button -->
       <button type="submit" [disabled]="profileForm.invalid"
         class="w-full py-3 mt-4 rounded-lg text-white font-semibold bg-gradient-to-r from-blue to-green hover:from-blue hover:to-green focus:outline-none focus:ring-2 focus:ring-green transition duration-300">
         Registrar novo usuário
       </button>
     </form>
   </p-dialog>
+
 </div>
