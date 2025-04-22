@@ -2,7 +2,7 @@
 
 ![Angular](https://img.shields.io/badge/Angular-19-DD0031?logo=angular)
 ![PrimeNG](https://img.shields.io/badge/PrimeNG-14.0.0-1976D2?logo=prime)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0.0-06B6D4?logo=tailwind-css)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.4-06B6D4?logo=tailwind-css)
 
 Sistema CRUD com controle de acesso baseado em licenças dinâmicas e fixas, desenvolvido com Angular 19, PrimeNG e TailwindCSS.
 
