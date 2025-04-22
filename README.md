@@ -30,9 +30,10 @@ Angular CLI 19+
 Clone o repositório:
 
 ```ruby
+cd junior-desafio
 git clone https://github.com/Holandara/junior-desafio.git
 ```
-```cd junior-desafio```
+
 
 2. Instale as dependências:
 
@@ -42,7 +43,6 @@ npm install
 
 3. Execute a aplicação:
 
-bash
 ```ruby
 ng serve
 ```
@@ -94,15 +94,15 @@ loginHistory: Registro de logins diários
 loggedInUser: Usuário atualmente logado
 
 🎨 Componentes<br>
-LoginComponent
--Valida credenciais
--Aplica regras de licenciamento
--Redireciona para registro após login
+LoginComponent<br>
+-Valida credenciais<br>
+-Aplica regras de licenciamento<br>
+-Redireciona para registro após login<br>
 
-RegisterComponent
--CRUD completo de usuários
--Visualização de licenças utilizadas
--Validação de formulários
+RegisterComponent<br>
+-CRUD completo de usuários<br>
+-Visualização de licenças utilizadas<br>
+-Validação de formulários<br>
 
 
 ### Diagrama de Fluxo
