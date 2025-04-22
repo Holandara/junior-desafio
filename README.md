@@ -1,8 +1,9 @@
 # Sistema de Controle de Licenças de Acesso
 
-![Angular](https://img.shields.io/badge/Angular-19-DD0031?logo=angular)
-![PrimeNG](https://img.shields.io/badge/PrimeNG-14.0.0-1976D2?logo=prime)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.0-06B6D4?logo=tailwind-css)
+![Angular](https://img.shields.io/badge/Angular-19.1-DD0031?logo=angular)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-19.0-1976D2?logo=primeng)
+![PrimeIcons](https://img.shields.io/badge/PrimeIcons-7.0-1976D2?logo=primeng)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.4-06B6D4?logo=tailwind-css)
 
 Sistema CRUD com controle de acesso baseado em licenças dinâmicas e fixas, desenvolvido com Angular 19, PrimeNG e TailwindCSS.
 
@@ -26,13 +27,14 @@ Node.js 18+
 
 Angular CLI 19+
 
-1. Instalação
+1. Instalação<br>
 Clone o repositório:
 
 ```ruby
-git clone https://github.com/holandara/junior-desafio.git
+cd junior-desafio
+git clone https://github.com/Holandara/junior-desafio.git
 ```
-```cd junior-desafio```
+
 
 2. Instale as dependências:
 
@@ -42,7 +44,6 @@ npm install
 
 3. Execute a aplicação:
 
-bash
 ```ruby
 ng serve
 ```
@@ -68,7 +69,8 @@ src/<br>
 │ │ └── register/ # Componente de registro<br>
 │ ├── services/<br>
 │ │ └── license.service.ts # Lógica de controle de licenças<br>
-│ └── validators/ # Validadores customizados<br>
+│ │ └── current-date.service.ts # Lógica de controle de datas<br>
+│ └── validators/ # Validadores de formulários customizados<br>
 ├── assets/ # Recursos estáticos<br>
 └── styles/ # Estilos globais<br>
 
@@ -94,15 +96,15 @@ loginHistory: Registro de logins diários
 loggedInUser: Usuário atualmente logado
 
 🎨 Componentes<br>
-LoginComponent
--Valida credenciais
--Aplica regras de licenciamento
--Redireciona para registro após login
+LoginComponent<br>
+-Valida credenciais<br>
+-Aplica regras de licenciamento<br>
+-Redireciona para registro após login<br>
 
-RegisterComponent
--CRUD completo de usuários
--Visualização de licenças utilizadas
--Validação de formulários
+RegisterComponent<br>
+-CRUD completo de usuários<br>
+-Visualização de licenças utilizadas<br>
+-Validação de formulários<br>
 
 
 ### Diagrama de Fluxo
