@@ -1,7 +1,8 @@
 # Sistema de Controle de Licenças de Acesso
 
-![Angular](https://img.shields.io/badge/Angular-19-DD0031?logo=angular)
-![PrimeNG](https://img.shields.io/badge/PrimeNG-14.0.0-1976D2?logo=prime)
+![Angular](https://img.shields.io/badge/Angular-19.1-DD0031?logo=angular)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-19.0-1976D2?logo=primeng)
+![PrimeIcons](https://img.shields.io/badge/PrimeIcons-7.0-1976D2?logo=primeng)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.4-06B6D4?logo=tailwind-css)
 
 Sistema CRUD com controle de acesso baseado em licenças dinâmicas e fixas, desenvolvido com Angular 19, PrimeNG e TailwindCSS.
