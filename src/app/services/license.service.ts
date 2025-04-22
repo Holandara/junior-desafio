@@ -40,7 +40,7 @@ export class LicenseService {
     if (uniqueDynamicUsersToday >= this.MAX_DYNAMIC_LICENSES) {
       return {
         allowed: false,
-        reason: `Limit of ${this.MAX_DYNAMIC_LICENSES} dynamic users reached today.`
+        reason: `Limite de ${this.MAX_DYNAMIC_LICENSES} usuários dinâmicos atigindo hoje.`
       };
     }
 

@@ -58,6 +58,7 @@ export class LoginComponent {
       const user = this.users.find(u => u.Name === name && u.password === password);
   
       if (user) {
+
         if (selectedDate) {
           localStorage.setItem('simulatedDate', new Date(selectedDate).toISOString().split('T')[0]);
         }

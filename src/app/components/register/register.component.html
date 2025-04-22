@@ -9,7 +9,7 @@
 </div>
 <div class="bg-background-100 h-screen">
   <div class=" relative px-10 mx-auto flex flex-wrap gap-5  rounded-lg ">  
-    <p-table [value]="users" [rowHover]="true" class="w- md:w-2/3 text-sm text-left text-gray-500 shadow-md ">
+    <p-table [value]="users" [rowHover]="true" class="w- md:w-2/3 w-screen text-sm text-left text-gray-500 shadow-md ">
       
       <!-- Cabeçalho -->
       <ng-template pTemplate="header" >
@@ -43,10 +43,6 @@
             
             {{ user.Name }}
             <ng-container *ngIf="user.isFixed && hasUserLoggedToday(user.Name)">
-              <span 
-                class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full ml-2"
-                pTooltip="Já utilizou a licença hoje"
-              >
                 <ng-container *ngIf="user.isFixed && hasUserLoggedToday(user.Name)">
               <span 
                 class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full ml-2"
@@ -55,8 +51,7 @@
                 <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                 Hoje
               </span>
-            </ng-container>
-              </span>
+              </ng-container>
             </ng-container>
           </td>
           <td class="px-6 py-4">
@@ -141,6 +136,9 @@
         </div>
         <div *ngIf="Name?.errors?.['minlength']" class="text-sm text-red-600 mt-1">
           ⓘ O nome deve ter no mínimo 3 caracteres.
+        </div>
+        <div *ngIf="Name?.errors?.['namePattern']" class="text-sm text-red-600 mt-1">
+          ⓘ O nome deve ser alfanumérico.
         </div>
       </div>
   

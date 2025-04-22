@@ -8,7 +8,7 @@ export const appConfig: ApplicationConfig = {
         provideAnimationsAsync(),
         providePrimeNG({
             ripple: true,
-            theme: 'aura-light-blue',  // Use o nome do tema como string
+            theme: 'aura-light-blue', 
             options: {
                 darkModeSelector: '.my-app-dark'
             }

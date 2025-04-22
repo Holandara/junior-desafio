@@ -49,6 +49,7 @@ export class RegisterComponent {
 
   users: User[] = [];
 
+  //Ideia de UI 
   loggedDynamicUsersToday = 0;
   readonly MAX_DYNAMIC_LICENSES = 3;
 
@@ -129,11 +130,6 @@ export class RegisterComponent {
     this.users = users; // Atualiza tabela em tempo real
     this.profileForm.get('username')?.updateValueAndValidity(); // Atualiza validators
 
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Cadastro realizado com sucesso!',
-      detail: 'O novo usuário foi cadastrado com sucesso.'
-    });
   }
 
   visible: boolean = false; // Determina o dialog de registro como invisível assim que entra na página

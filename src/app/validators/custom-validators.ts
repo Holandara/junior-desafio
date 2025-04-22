@@ -20,6 +20,10 @@ export class CustomValidators {
 
     if (!value) return null; // Deixa outros validadores tratarem se estiver vazio
 
+    // Verifica se o nome já existe no localStorage
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const nameExists = users.some((user: { Name: string }) => user.Name === value);
+    
     // Verifica se o nome é alfanumérico e não tem espaços
     const hasOnlyAlphanumeric = /^[a-zA-Z0-9]+$/.test(value);
     const hasSpaces = /\s/.test(value);
@@ -27,9 +31,7 @@ export class CustomValidators {
     // Validação de caracteres e espaços
     const valid = hasOnlyAlphanumeric && !hasSpaces;
 
-    // Verifica se o nome já existe no localStorage
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const nameExists = users.some((user: { Name: string }) => user.Name === value);
+    
     // Se o nome for inválido ou já existir, retorna erro
     if (!valid) {
       return { namePattern: true }; // Nome não é alfanumérico ou contém espaços
