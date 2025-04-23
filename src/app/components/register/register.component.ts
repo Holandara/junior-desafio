@@ -136,6 +136,7 @@ export class RegisterComponent {
     localStorage.setItem('users', JSON.stringify(users));
     this.users = users; //update list
     this.loadUsers;
+    
   }
 
   showDialog() {
