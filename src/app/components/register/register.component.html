@@ -72,7 +72,7 @@
           <td class="px-6 py-4">
             {{ user.email }}
           </td>
-          <td class="px-6 py-4">
+          <td class="px-6 py-2">
             <p-button 
               [rounded]="true"
               [text]="true"
@@ -81,8 +81,19 @@
               icon="pi pi-trash" 
               severity="danger"
               variant="outlined"
+              class=""
+            />
+            <p-button 
+              [rounded]="true"
+              [text]="true"
+              type="button" 
+              (click)="editUser(user)"
+              icon="pi pi-pencil" 
+              severity="info"
+              variant="outlined"
               class=" "
             />
+            
           </td>
         </tr>
       </ng-template>
@@ -98,25 +109,17 @@
         
       </div>
       
-      
+      <!-- Dynamic Users -->
       <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 mt-10 bg-white ">
         <p class="py-0 px-2 justify-self-start-safe inline">Usuários Dinâmicos</p>
         <span class="align-items justify-self-end-safe grid-row-2 pi pi-history text-white bg-orange-400 rounded-full p-4"></span>
-        <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ dinamicUsersCount }}</span></div>
-        <!-- <div class="mt-2">
-          <p class="text-sm text-gray-400 mb-1">
-            Licenças usadas hoje: {{ loggedDynamicUsersToday }} / {{ MAX_DYNAMIC_LICENSES }}
-          </p>
-          <div class="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              class="bg-orange-400 h-2.5 rounded-full transition-all duration-300"
-              [style.width.%]="(loggedDynamicUsersToday / MAX_DYNAMIC_LICENSES) * 100"
-            ></div>
-          </div>
-        </div> -->
-        
+        <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ dinamicUsersCount }}</span>
+        </div>
+        <span  
+        (click)="showConfig()" 
+        class="mt-2 align-items justify-self-end-safe grid-row-2 pi pi-cog text-white bg-blue rounded-full p-4 hover:cursor-pointer">
+        </span>
       </div>
-
       
     </div>
   </div>
@@ -193,4 +196,66 @@
     </form>
   </p-dialog>
 
+  <!-- Editar -->
+  <p-dialog [modal]="true" [(visible)]="visibleEdit" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+    <div class="pb-5 text-center font-sans font-regular text-2xl text-transparent bg-gradient-to-r from-blue to-green inline-block bg-clip-text">
+      Editar usuário existente
+    </div>
+    <form [formGroup]="editForm" (ngSubmit)="handleEditSubmit()">
+      <!-- Nome -->
+      <div class="flex flex-col">
+        <label for="editName" class="text-sm font-medium text-gray-700">Nome</label>
+        <input type="text" id="editName" formControlName="Name" placeholder="Nome"
+          class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
+      </div>
+  
+      <!-- E-mail -->
+      <div class="pt-5 flex flex-col">
+        <label for="editEmail" class="text-sm font-medium text-gray-700">E-mail</label>
+        <input type="email" id="editEmail" formControlName="email" placeholder="E-mail"
+          class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
+      </div>
+  
+      <!-- CPF -->
+      <div class="pt-5 flex flex-col">
+        <label for="editCpf" class="text-sm font-medium text-gray-700">CPF</label>
+        <input type="text" id="editCpf" formControlName="cpf" placeholder="CPF"
+          class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
+      </div>
+  
+      <!-- Tipo de Licença (Fixa/Dinâmica) -->
+      <div class="flex items-center space-x-3 mb-5 pt-5">
+        <input id="editIsFixed" type="checkbox" formControlName="isFixed" 
+          class="w-4 h-4 border border-blue rounded-sm bg-blue focus:ring-2 focus:ring-green" />
+        <label for="editIsFixed" class="text-sm font-medium text-gray-600">Usuário é dinâmico?</label>
+      </div>
+  
+      <!-- Botão de Salvar -->
+      <button type="submit"   
+        class="w-full py-3 mt-4 rounded-lg text-white font-semibold bg-gradient-to-r from-blue to-green hover:from-blue hover:to-green focus:outline-none focus:ring-2 focus:ring-green transition duration-300">
+        Salvar
+      </button>
+    </form>
+  </p-dialog>
+
+  <p-dialog [modal]="true" [(visible)]="visibleConfig" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <div class="pb-5 text-center font-sans font-regular text-2xl text-transparent bg-gradient-to-r from-blue to-green inline-block bg-clip-text">
+      Configuração de licenças dinâmicas
+    </div>
+    <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 mt-10 bg-white">
+      <div class="col-span-2">
+        <h3 class="text-center mb-4">Limite de Licenças Dinâmicas</h3>
+        <div class="flex items-center gap-4">
+          <span>0</span>
+          <p-slider [(ngModel)]="MAX_DYNAMIC_LICENSES" 
+                    [min]="0" 
+                    [max]="10" 
+                    [step]="1"
+                    class="w-full">
+          </p-slider>
+          <span>{{MAX_DYNAMIC_LICENSES}}</span>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
 </div>

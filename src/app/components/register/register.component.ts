@@ -12,6 +12,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
 import { HeaderComponent } from "../header/header.component";
+import { Slider } from 'primeng/slider';
+import { FormsModule } from '@angular/forms';
+import { LicenseService } from '../../services/license.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +22,7 @@ import { HeaderComponent } from "../header/header.component";
   imports: [
     ReactiveFormsModule, CommonModule, ButtonModule, TableModule,
     DialogModule, ToastModule, TooltipModule, DatePickerModule,
-    CardModule, HeaderComponent
+    CardModule, HeaderComponent, Slider, FormsModule
   ],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,7 +31,7 @@ import { HeaderComponent } from "../header/header.component";
 export class RegisterComponent {
   title = 'desafio-junior';
   isNewUser: boolean = false;
-
+  selectedUser: User | null = null;
   // Reactive Forms validators config
   profileForm = new FormGroup({
     Name: new FormControl('', [
@@ -47,13 +50,35 @@ export class RegisterComponent {
     isFixed: new FormControl(false),
   });
 
+  
+  editForm = new FormGroup({
+    Name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(10),
+    ]),
+    email: new FormControl('', [Validators.email]),
+    cpf: new FormControl(''),
+    isFixed: new FormControl(false),
+  });
+
+  loggedDynamicUsersToday: number = 0;
   users: User[] = [];
-
-  loggedDynamicUsersToday = 0;
-  readonly MAX_DYNAMIC_LICENSES = 3;
-
-  constructor(private messageService: MessageService) {
+  
+  constructor(
+    private messageService: MessageService,
+    private licenseService: LicenseService // Adicione a injeção do serviço
+  ) {
     this.loadUsers();
+  }
+
+
+  get MAX_DYNAMIC_LICENSES(): number {
+    return this.licenseService.MAX_DYNAMIC_LICENSES;
+  }
+
+  set MAX_DYNAMIC_LICENSES(value: number) {
+    this.licenseService.MAX_DYNAMIC_LICENSES = value;
   }
 
   //gets current date based on simulateddate and saves on login
@@ -124,9 +149,13 @@ export class RegisterComponent {
     this.users = users; // Update table in real time
     this.profileForm.get('username')?.updateValueAndValidity(); // Update validators
 
+
   }
 
   visible: boolean = false; // Sets dialog invisible by default
+  visibleEdit: boolean = false;
+  visibleConfig: boolean = false;
+
 
   deleteUser(userToDelete: User) {
     const usersFromStorage = localStorage.getItem('users');
@@ -139,9 +168,53 @@ export class RegisterComponent {
     
   }
 
+  editUser(userToEdit: User) {
+    console.log('Usuário selecionado para edição:', userToEdit)
+    this.selectedUser = userToEdit;
+    this.editForm.patchValue({
+      Name: userToEdit.Name,
+      email: userToEdit.email,
+      cpf: userToEdit.cpf,      
+      isFixed: userToEdit.isFixed 
+    });
+    this.visibleEdit = true; // Abre o dialog de edição
+  }
+
+handleEditSubmit() {
+  if (this.editForm.valid && this.selectedUser) {
+    const updatedUser = {
+      ...this.selectedUser, // Mantém os dados originais
+      ...this.editForm.value, // Sobrescreve apenas os campos editados
+    };
+
+    // Atualiza o localStorage
+    const usersFromStorage = localStorage.getItem('users');
+    let users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
+
+    // Substitui o usuário original pelo atualizado
+    users = users.map((user: User) =>
+      user.Name === this.selectedUser?.Name ? updatedUser : user
+    );
+
+    localStorage.setItem('users', JSON.stringify(users));
+    this.loadUsers();
+    // Fecha o diálogo e reseta o formulário
+    this.visibleEdit = false;
+    this.editForm.reset();
+    this.selectedUser = null;
+  }
+}
+
+  showDialog2(){
+    this.visibleEdit = true;
+  }
+
   showDialog() {
     this.visible = true;
-    
+  }
+
+  showConfig(){
+    this.visibleConfig = true;
   }
   // Success message after creating user
 
@@ -173,6 +246,8 @@ export class RegisterComponent {
     );
     this.loadUsers;
   }
+
+
 }
 
 interface User {

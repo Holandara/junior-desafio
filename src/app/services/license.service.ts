@@ -6,13 +6,27 @@ import { CurrentDateService } from './current-date.service';
   providedIn: 'root' // Specifies that this service is provided at the root level
 })
 export class LicenseService {
-  // Maximum number of dynamic licenses allowed per day
-  private readonly MAX_DYNAMIC_LICENSES = 3;
-  // Key used to store login history in localStorage
-  private readonly LOGIN_HISTORY_KEY = 'loginHistory';
-
-  // Injects the CurrentDateService to handle date-related operations
-  constructor(private dateService: CurrentDateService) {}
+ 
+   private _MAX_DYNAMIC_LICENSES = 0;
+   // Key used to store login history in localStorage
+   private readonly LOGIN_HISTORY_KEY = 'loginHistory';
+ 
+   get MAX_DYNAMIC_LICENSES(): number {
+     return this._MAX_DYNAMIC_LICENSES;
+   }
+ 
+   set MAX_DYNAMIC_LICENSES(value: number) {
+     this._MAX_DYNAMIC_LICENSES = value;
+     localStorage.setItem('MAX_DYNAMIC_LICENSES', value.toString());
+   }
+ 
+   constructor(private dateService: CurrentDateService) {
+     // Load saved value from localStorage if it exists
+     const savedMax = localStorage.getItem('MAX_DYNAMIC_LICENSES');
+     if (savedMax) {
+       this._MAX_DYNAMIC_LICENSES = parseInt(savedMax);
+     }
+   }
 
   // Determines if a user is allowed to log in
   canUserLogin(user: any): { allowed: boolean, reason?: string } {

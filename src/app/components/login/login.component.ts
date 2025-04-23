@@ -62,6 +62,12 @@ export class LoginComponent {
       const password = this.loginForm.value.password;
       const selectedDate = this.loginForm.value.loginDate;
   
+      if (name === 'Admin' && password === 'ABC123') {
+        // Admin direct access
+        this.router.navigate(['/registro']);
+        return;
+      }
+
       const user = this.users.find(u => u.Name === name && u.password === password);
   
       if (user) {
