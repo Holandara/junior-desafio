@@ -13,9 +13,8 @@
                     <div class="relative z-0 flex flex-col mb-5 drop-shadow-md">
                         <p-iconfield>
                             <p-inputicon class="pi pi-user" style="color: #3F3E3E"/>
-                            <input class= "w-full" style="color: #3F3E3E" pInputText placeholder="Usuário" formControlName="Name" />
-                                
-                            </p-iconfield>
+                            <input class= "w-full" style="color: #3F3E3E" pInputText placeholder="Usuário" formControlName="Name" />        
+                        </p-iconfield>
                         </div>
     
                         <div class="flex flex-col drop-shadow-md" >
@@ -25,9 +24,7 @@
                             </p-iconfield>
                         </div>
     
-                        <div *ngIf="Name?.errors?.['required'] || password?.errors?.['required']" class="mt-3 text-sm text-danger">
-                            ⓘ Por favor preencha todos <br>os campos
-                        </div>
+                        
                         <div class="w-full z-20 flex flex-col  text-gray-900 mt-5 drop-shadow">
                             <p-datepicker 
                             inputId="loginDate" 
@@ -47,6 +44,9 @@
                                     class=" shadow-lg drop-shadow cursor-pointer border-1 hover:bg-blend-hard-light  bg-gradient-to-r from-blue to-green shadow-xl rounded-xl text-xl font-medium p-2 text-white">
                                 Entrar
                             </button>
+                            <div *ngIf="Name?.errors?.['required'] && password?.errors?.['required']" class="text-center mt-3 text-sm text-blue">
+                                ⓘ Preencha todos os campos
+                            </div>
                             <button (click)="showDialog()" label="Show" class="pt-5 hover:underline cursor-pointer">Esqueci minha senha</button>
                                 <p-dialog header="Mudar senha" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
                                     <span class="p-text-secondary block mb-8">Um código de recuperação será enviado no seu e-mail</span>
