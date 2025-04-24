@@ -5,7 +5,6 @@ import { CustomValidators } from '../../validators/custom-validators';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
@@ -17,13 +16,14 @@ import { FormsModule } from '@angular/forms';
 import { LicenseService } from '../../services/license.service';
 import { DropdownModule } from 'primeng/dropdown';
 
+import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     ReactiveFormsModule, CommonModule, ButtonModule, TableModule,
     DialogModule, ToastModule, TooltipModule, DatePickerModule,
-    CardModule, HeaderComponent, Slider, FormsModule, DropdownModule
+    CardModule, HeaderComponent, Slider, FormsModule, DropdownModule, RouterOutlet
   ],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -72,6 +72,7 @@ export class RegisterComponent {
 
   loggedDynamicUsersToday: number = 0;
   users: User[] = [];
+  sidebarOpen = true;
 
   constructor(
     private messageService: MessageService,
@@ -230,6 +231,11 @@ export class RegisterComponent {
       summary: 'Usuário criado',
       detail: 'Cadastro realizado com sucesso!'
     });
+    
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
   }
 
   handleSubmit() {

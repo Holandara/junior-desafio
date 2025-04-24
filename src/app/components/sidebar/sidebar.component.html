@@ -1,0 +1,39 @@
+<aside class="pt-2 w-64 bg-background-100 h-full flex flex-col">
+
+    
+  
+    <!-- Navegação -->
+    <nav class="flex-1 p-4 overflow-y-auto">
+      <ul class="space-y-1">
+        <!-- Gestão de Usuários -->
+        <li>
+          <a
+            routerLink="/dashboard"
+            routerLinkActive="bg-white text-blue"
+            class="flex items-center p-3 rounded-lg hover:bg-white transition-colors cursor-pointer"
+          >
+            <i class="pi pi-users mr-3"></i>
+            <span>Gestão de Usuários</span>
+            
+          </a>
+        </li>
+  
+        <!-- Gestão de Licenças -->
+        <li>
+            <div
+            routerLink="/dashboard/licencas"
+            routerLinkActive="bg-white text-blue"
+            class="flex items-center p-3 rounded-lg hover:bg-white transition-colors cursor-pointer"
+          >
+            <i class="pi pi-key mr-3"></i>
+            <span>Gestão de Licenças</span>
+          </div>
+          
+        </li>
+      </ul>
+    </nav>
+  
+    <div class="p-4 border-t text-sm text-gray-500">
+      Versão 1.0.0
+    </div>
+  </aside>

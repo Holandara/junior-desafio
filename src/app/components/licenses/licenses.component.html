@@ -1,0 +1,49 @@
+<div class="header bg-white line w-screen md:w-full  px-4 py-3 shadow-md justify-between flex items-center">
+  <span  class="px-5 text-xl  font-bold bg-gradient-to-r from-blue to-green inline-block text-transparent bg-clip-text">Gestão de Licenças</span>
+  <span class="px-5 text-xl  font-bold bg-gradient-to-r text-blue hover:cursos-pointer">
+  <i  class="pi pi-user pr-7" ></i>
+  <i  class="pi pi-sign-out" routerLink="/login" ></i>
+  
+  </span>
+</div>
+<div class="h-1 w-1"></div>
+<div class="p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Card de Usuários Fixos -->
+      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-5 rounded-3xl bg-white">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-medium">Usuários Fixos</h3>
+          <span class="pi pi-lock text-white bg-green rounded-full p-3"></span>
+        </div>
+        <p class="text-4xl text-gray-600 font-medium">{{ fixedUsersCount }}</p>
+      </div>
+  
+      <!-- Card de Usuários Dinâmicos -->
+      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-5 rounded-3xl bg-white">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-medium">Usuários Dinâmicos</h3>
+          <span class="pi pi-history text-white bg-orange-400 rounded-full p-3"></span>
+        </div>
+        <div class="flex justify-between items-end">
+          <p class="text-4xl text-gray-600 font-medium">{{ dinamicUsersCount }}</p>
+         
+        </div>
+        <div class="mt-10 relative shadow-md border-1 border-gray-100 text-gray-400 p-5 rounded-3xl bg-white">
+          <span class="block mb-3">Limite de Licenças Dinâmicas:</span>
+        
+          <div class="flex items-center gap-4">
+            <span class="font-medium text-gray-700">0</span>
+            <p-slider 
+              [(ngModel)]="MAX_DYNAMIC_LICENSES" 
+              [min]="0" 
+              [max]="10" 
+              [step]="1" 
+              class="flex-1">
+            </p-slider>
+            <span class="font-medium text-gray-700">{{ MAX_DYNAMIC_LICENSES }}</span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
