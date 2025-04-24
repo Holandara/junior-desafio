@@ -2,13 +2,13 @@
     "version": 2,
     "builds": [
       {
-        "src": "dist/angular-ecomm/index.html",
+        "src": "dist/angular-ecomm/**/*",
         "use": "@vercel/static"
       }
     ],
     "routes": [
       {
-        "src": "/.*",
+        "src": "/(.*)",
         "dest": "/index.html",
         "status": 200
       }
