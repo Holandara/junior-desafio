@@ -66,7 +66,7 @@ export class LoginComponent {
         email: 'admin@system.com',
         password: 'Admin@123',
         cpf: '000.000.000-00',
-        license: 'admin'
+        license: 'personalizada'
       };
       
       users.push(adminUser);
@@ -162,7 +162,7 @@ interface User {
   Name: string;
   password: string;
   date?: string;
-  license: 'fixo' | 'dinâmico' | 'admin';
+  license: 'fixo' | 'dinâmico' | 'personalizada';
   email?: string;
   cpf?: string;
 }
