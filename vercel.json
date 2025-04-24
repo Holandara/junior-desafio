@@ -1,12 +1,15 @@
 {
     "version": 2,
-    "buildCommand": "npm run build --configuration=production",
-    "installCommand": "npm install",
-    "outputDirectory": "dist/angular-ecomm",
+    "builds": [
+      {
+        "src": "dist/angular-ecomm/browser/index.html",
+        "use": "@vercel/static"
+      }
+    ],
     "routes": [
       {
-        "src": "/.*",
-        "dest": "/index.html"
+        "src": "/(.*)",
+        "dest": "/browser/index.html"
       }
     ]
   }
