@@ -39,7 +39,8 @@ export class RegisterComponent {
   // Opções de licença
   licenseOptions: { label: string, value: string }[] = [
     { label: 'Usuário fixo', value: 'fixo' },
-    { label: 'Usuário dinâmico', value: 'dinâmico' }
+    { label: 'Usuário dinâmico', value: 'dinâmico' },
+    { label: 'Personalizado', value: 'nova' }
   ];
 
   selectedLicense: string = 'dinâmico'; // Valor padrão

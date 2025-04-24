@@ -26,14 +26,17 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./licenses.component.css']
 })
 export class LicensesComponent implements OnInit {
-  manualLicenses: { licenseName: string, licenseType: string }[] = [];
+  
+  manualLicenses: any[] = JSON.parse(localStorage.getItem('manualLicenses') || '[]');
+
   visibleConfig = false;
   users: any[] = [];
   licenses: any[] = [];
   showNewLicenseForm = false;
   newLicense = {
     licenseName: '',
-    licenseType: ''
+    licenseType: '',
+    licenseDescription: '' 
   };
   constructor(private licenseService: LicenseService) {}
 
@@ -41,16 +44,17 @@ export class LicensesComponent implements OnInit {
     this.showNewLicenseForm = true;
   }
 
-createLicense() {
-  if (!this.newLicense.licenseName || !this.newLicense.licenseType) return;
-
-  this.manualLicenses.push({ ...this.newLicense });
-  localStorage.setItem('manualLicenses', JSON.stringify(this.manualLicenses));
-
-  this.newLicense = { licenseName: '', licenseType: '' };
-  this.showNewLicenseForm = false;
-}
-
+  createLicense() {
+    if (!this.newLicense.licenseName || !this.newLicense.licenseType || !this.newLicense.licenseDescription) return;
+  
+    // Adiciona a nova licença à lista
+    this.manualLicenses.push({ ...this.newLicense });
+    localStorage.setItem('manualLicenses', JSON.stringify(this.manualLicenses));
+  
+    // Limpa o formulário
+    this.newLicense = { licenseName: '', licenseType: '', licenseDescription: '' };
+    this.showNewLicenseForm = false;  // Fecha o formulário
+  }
 
   ngOnInit() {
     this.loadUsers();

@@ -53,31 +53,37 @@
 
         <!-- Card Estático de Nova Licença -->
         <p-dialog [modal]="true" [(visible)]="showNewLicenseForm" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
-        <div *ngIf="showNewLicenseForm" >
-          <h3 class="text-lg font-semibold mb-4 text-gray-800">Nova Licença</h3>
-          <form (ngSubmit)="createLicense()" #licenseForm="ngForm" class="space-y-4">
-            <div class="flex flex-col">
-              <label  class="text-sm font-medium text-gray-700">Nome</label>
-              <input type="text" [(ngModel)]="newLicense.licenseName" name="namenew" required
-                class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
-            </div>
-           
-            <div>
-              <label class="block text-sm font-medium text-gray-600">Tipo de Licença</label>
-              <select [(ngModel)]="newLicense.licenseType" name="licensenew" required class="w-full p-2 border rounded-md">
-                <option value="" disabled selected>Selecione</option>
-                <option value="fixo">Fixo</option>
-                <option value="dinâmico">Dinâmico</option>
-              </select>            
-            </div>
+          <div *ngIf="showNewLicenseForm" >
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Nova Licença</h3>
+            <form (ngSubmit)="createLicense()" #licenseForm="ngForm" class="space-y-4">
+              <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700">Nome</label>
+                <input type="text" [(ngModel)]="newLicense.licenseName" name="namenew" required
+                  class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-600">Tipo de Licença</label>
+                <select [(ngModel)]="newLicense.licenseType" name="licensenew" required class="w-full p-2 border rounded-md">
+                  <option value="" disabled selected>Selecione</option>
+                  <option value="novo">Novo</option>          
+                </select>
+              </div>
+            
+              <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700">Descrição</label>
+                <textarea [(ngModel)]="newLicense.licenseDescription" name="descriptionnew" required
+                  class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" rows="4"></textarea>
+              </div>
         
-            <button type="submit" [disabled]="!licenseForm.form.valid"
-              class="bg-blue hover:bg-green text-white px-4 py-2 rounded-md transition">
-              Cadastrar
-            </button>
-          </form>
-        </div>
-      </p-dialog>
+              <button type="submit" [disabled]="!licenseForm.form.valid"
+                class="bg-blue hover:bg-green text-white px-4 py-2 rounded-md transition">
+                Cadastrar
+              </button>
+            </form>
+          </div>
+        </p-dialog>
+        
       
       </div>
       <!-- Lista de Licenças Cadastradas -->
@@ -87,12 +93,13 @@
     <div class="flex justify-between items-center mb-2">
       <h3 class="text-lg font-semibold text-gray-800">{{ lic.licenseName }}</h3>
       <span [ngClass]="{
-        'bg-green': lic.licenseType === 'fixo',
-        'bg-orange-400': lic.licenseType === 'dinâmico'
+        'bg-blue': lic.licenseType === 'novo',
+       
       }" class="text-white px-3 py-1 rounded-full text-sm capitalize">
         {{ lic.licenseType }}
       </span>
     </div>
+    <p class="text-sm text-gray-600 mt-2">Descrição: {{ lic.licenseDescription }}</p>
   </div>
 </div>
 
