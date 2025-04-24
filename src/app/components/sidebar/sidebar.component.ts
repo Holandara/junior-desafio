@@ -11,5 +11,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
+  sidebarOpen = false;
 
 }

@@ -13,3 +13,7 @@ a {
 .h-full {
   height: 100vh;
 }
+
+aside {
+  transition: transform 0.3s ease;
+}
