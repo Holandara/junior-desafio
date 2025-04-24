@@ -7,6 +7,7 @@ import { SliderModule } from 'primeng/slider';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { RouterModule } from '@angular/router'; 
 
 @Component({
   selector: 'app-licenses',
@@ -18,7 +19,8 @@ import { DropdownModule } from 'primeng/dropdown';
     SliderModule,
     CardModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule, 
+    RouterModule
   ],
   templateUrl: './licenses.component.html',
   styleUrls: ['./licenses.component.css']

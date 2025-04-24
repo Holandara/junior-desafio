@@ -47,12 +47,34 @@ export class LoginComponent {
     private licenseService: LicenseService, 
     private messageService: MessageService 
   ) {
+    this.initializeAdminUser();
     this.loadUsers();
   }
 
   
   visible: boolean = false; // Sets dialog invisible by default
-  
+
+  private initializeAdminUser() {
+    const usersFromStorage = localStorage.getItem('users');
+    let users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
+    
+    const adminExists = users.some((user: User) => user.Name === 'admin');
+    
+    if (!adminExists) {
+      const adminUser: User = {
+        Name: 'admin',
+        email: 'admin@system.com',
+        password: 'Admin@123',
+        cpf: '000.000.000-00',
+        license: 'admin'
+      };
+      
+      users.push(adminUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      this.loadUsers();
+    }
+  }
+
   showDialog() {
     this.visible = true;
   }
@@ -62,9 +84,8 @@ export class LoginComponent {
       const password = this.loginForm.value.password;
       const selectedDate = this.loginForm.value.loginDate;
   
-      if (name === 'Admin' && password === 'ABC123') {
-        // Admin direct access
-        this.router.navigate(['/registro']);
+      if (name === 'admin' && password === 'Admin@123') {
+        this.router.navigate(['/dashboard']);
         return;
       }
   
@@ -101,7 +122,7 @@ export class LoginComponent {
       this.loadDate();
     }
 
-    this.router.navigate(['/registro']);
+    this.router.navigate(['/dashboard']);
 
   }
   
@@ -140,6 +161,8 @@ export class LoginComponent {
 interface User {
   Name: string;
   password: string;
-  date: string;
-  isFixed: boolean; 
+  date?: string;
+  license: 'fixo' | 'dinâmico' | 'admin';
+  email?: string;
+  cpf?: string;
 }

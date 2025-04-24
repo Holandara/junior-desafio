@@ -15,15 +15,17 @@ import { Slider } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
 import { LicenseService } from '../../services/license.service';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { RouterModule } from '@angular/router'; 
 import { RouterOutlet } from '@angular/router';
+import { CurrentDateService } from '../../services/current-date.service';
+
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     ReactiveFormsModule, CommonModule, ButtonModule, TableModule,
     DialogModule, ToastModule, TooltipModule, DatePickerModule,
-    CardModule, HeaderComponent, Slider, FormsModule, DropdownModule, RouterOutlet
+    CardModule, HeaderComponent, Slider, FormsModule, DropdownModule, RouterOutlet, RouterModule
   ],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,18 +72,28 @@ export class RegisterComponent {
     license: new FormControl<'fixo' | 'dinâmico'>('dinâmico')
   });
 
-  loggedDynamicUsersToday: number = 0;
+  loggedDynamicUsersToday: string[] = [];
   users: User[] = [];
   sidebarOpen = true;
 
   constructor(
     private messageService: MessageService,
-    private licenseService: LicenseService
+    private licenseService: LicenseService,
+    private currentDateService: CurrentDateService
   ) {
     this.loadUsers();
     this.loadLicenseFromStorage();
+    
   }
-
+  ngOnInit(): void {
+    const today = this.currentDateService.getToday();
+    const history = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+    
+    this.loggedDynamicUsersToday = history
+      .filter((entry: any) => entry.date === today)
+      .map((entry: any) => entry.userName);
+  }
+ 
   // Carregar a licença do localStorage se existir
   loadLicenseFromStorage() {
     const savedLicense = localStorage.getItem('license');
@@ -120,7 +132,8 @@ export class RegisterComponent {
       .filter((login: any) => login.date === today && login.license === 'dinâmico')
       .map((login: any) => login.userName);
 
-    this.loggedDynamicUsersToday = new Set(dynamicUsersToday).size;
+      this.loggedDynamicUsersToday = Array.from(new Set(dynamicUsersToday));
+
   }
 
   get email() {
@@ -169,6 +182,7 @@ export class RegisterComponent {
   visibleEdit: boolean = false;
   visibleConfig: boolean = false;
 
+  
   deleteUser(userToDelete: User) {
     const usersFromStorage = localStorage.getItem('users');
     let users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
@@ -245,21 +259,21 @@ export class RegisterComponent {
     }
   }
 
-  hasUserLoggedToday(userName: string): boolean {
-  const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
-  const today = this.getToday();
-
-  return loginHistory.some(
-    (login: any) =>
-      login.userName === userName &&
-      login.date === today &&
-      login.license === 'dinâmico'
-  );
+  hasUserLoggedToday(username: string): boolean {
+    const today = this.currentDateService.getToday();
+    const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+    
+    return loginHistory.some(
+      (log: any) => 
+        log.userName === username && 
+        log.date === today
+    );
+  }
 }
 
  
 
-}
+
 
 
 interface User {
