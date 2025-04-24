@@ -3,11 +3,18 @@
   <span class="px-5 text-xl  font-bold bg-gradient-to-r text-blue hover:cursos-pointer">
   <i  class="pi pi-user pr-7" ></i>
   <i  class="pi pi-sign-out" routerLink="/login" ></i>
-  
   </span>
 </div>
 <div class="h-1 w-1"></div>
+<div class="flex justify-start ml-10 mt-2 ">
+  <i  pTooltip="Cadastrar nova licença" tooltipEvent="hover"
+     style="font-size: 1rem"
+     (click)="toggleNewLicenseCard()"
+     class=" shadow-md pi pi-plus rounded-full bg-blue text-white p-4 cursor-pointer hover:bg-green delay-150 transition ease-in-out duration-300">
+  </i>
+</div>
 <div class="p-6">
+  
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Card de Usuários Fixos -->
       <div class="shadow-md border-1 border-gray-100 text-gray-400 p-5 rounded-3xl bg-white">
@@ -43,7 +50,51 @@
             <span class="font-medium text-gray-700">{{ MAX_DYNAMIC_LICENSES }}</span>
           </div>
         </div>
-      </div>
+
+        <!-- Card Estático de Nova Licença -->
+        <p-dialog [modal]="true" [(visible)]="showNewLicenseForm" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+        <div *ngIf="showNewLicenseForm" >
+          <h3 class="text-lg font-semibold mb-4 text-gray-800">Nova Licença</h3>
+          <form (ngSubmit)="createLicense()" #licenseForm="ngForm" class="space-y-4">
+            <div class="flex flex-col">
+              <label  class="text-sm font-medium text-gray-700">Nome</label>
+              <input type="text" [(ngModel)]="newLicense.licenseName" name="namenew" required
+                class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-600">Tipo de Licença</label>
+              <select [(ngModel)]="newLicense.licenseType" name="licensenew" required class="w-full p-2 border rounded-md">
+                <option value="" disabled selected>Selecione</option>
+                <option value="fixos">Fixo</option>
+                <option value="dinâmicos">Dinâmico</option>
+              </select>            
+            </div>
+        
+            <button type="submit" [disabled]="!licenseForm.form.valid"
+              class="bg-blue hover:bg-green text-white px-4 py-2 rounded-md transition">
+              Cadastrar
+            </button>
+          </form>
+        </div>
+      </p-dialog>
       
+      </div>
+      <!-- Lista de Licenças Cadastradas -->
+     
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+  <div *ngFor="let lic of manualLicenses" class="shadow-md border border-gray-100 p-5 rounded-3xl bg-white">
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="text-lg font-semibold text-gray-800">{{ lic.licenseName }}</h3>
+      <span [ngClass]="{
+        'bg-green': lic.licenseType === 'fixo',
+        'bg-orange-400': lic.licenseType === 'dinâmico'
+      }" class="text-white px-3 py-1 rounded-full text-sm capitalize">
+        {{ lic.licenseType }}
+      </span>
+    </div>
+  </div>
+</div>
+
     </div>
   </div>

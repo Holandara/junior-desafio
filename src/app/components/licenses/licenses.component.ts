@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-licenses',
@@ -16,24 +17,54 @@ import { ButtonModule } from 'primeng/button';
     DialogModule,
     SliderModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    DropdownModule
   ],
   templateUrl: './licenses.component.html',
   styleUrls: ['./licenses.component.css']
 })
 export class LicensesComponent implements OnInit {
+  manualLicenses: { licenseName: string, licenseType: string }[] = [];
   visibleConfig = false;
   users: any[] = [];
-
+  licenses: any[] = [];
+  showNewLicenseForm = false;
+  newLicense = {
+    licenseName: '',
+    licenseType: ''
+  };
   constructor(private licenseService: LicenseService) {}
+
+  toggleNewLicenseCard() {
+    this.showNewLicenseForm = true;
+  }
+
+createLicense() {
+  if (!this.newLicense.licenseName || !this.newLicense.licenseType) return;
+
+  this.manualLicenses.push({ ...this.newLicense });
+  localStorage.setItem('manualLicenses', JSON.stringify(this.manualLicenses));
+
+  this.newLicense = { licenseName: '', licenseType: '' };
+  this.showNewLicenseForm = false;
+}
+
 
   ngOnInit() {
     this.loadUsers();
+    this.loadLicenses();
+    const stored = localStorage.getItem('manualLicenses');
+    this.manualLicenses = stored ? JSON.parse(stored) : [];
   }
 
   loadUsers() {
     const usersFromStorage = localStorage.getItem('users');
     this.users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
+  }
+
+  loadLicenses() {
+    const licensesFromStorage = localStorage.getItem('licenses');
+    this.licenses = licensesFromStorage ? JSON.parse(licensesFromStorage) : [];
   }
 
   get MAX_DYNAMIC_LICENSES(): number {
