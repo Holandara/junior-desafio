@@ -67,15 +67,15 @@ export class LoginComponent {
         this.router.navigate(['/registro']);
         return;
       }
-
+  
       const user = this.users.find(u => u.Name === name && u.password === password);
   
       if (user) {
-
         if (selectedDate) {
           localStorage.setItem('simulatedDate', new Date(selectedDate).toISOString().split('T')[0]);
         }
   
+        // Verifica se o usuário pode logar
         const loginCheck = this.licenseService.canUserLogin(user);
   
         if (loginCheck.allowed) {
@@ -89,6 +89,7 @@ export class LoginComponent {
       }
     }
   }
+  
   
   
   private handleSuccessfulLogin(user: User) {

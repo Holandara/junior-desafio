@@ -1,18 +1,21 @@
-
-<!-- TABLE -->
- <app-header></app-header>
- <p-toast></p-toast>
+<app-header></app-header>
+<p-toast></p-toast>
 
 <div class="relative py-5 px-10 justify-end bg-background-100"> 
-  
- <div ><i (click)="showDialog()"  pTooltip="Cadastrar novo usuário" tooltipEvent="hover"style="font-size: 1rem" class="shadow-md pi pi-plus rounded-full bg-blue text-white p-4 cursor-pointer hover:bg-green delay-150 transition ease-in-out duration-300"></i> </div>
+  <div>
+    <i (click)="showDialog()" pTooltip="Cadastrar novo usuário" tooltipEvent="hover"
+       style="font-size: 1rem"
+       class="shadow-md pi pi-plus rounded-full bg-blue text-white p-4 cursor-pointer hover:bg-green delay-150 transition ease-in-out duration-300">
+    </i>
+  </div>
 </div>
+
 <div class="bg-background-100 h-screen">
-  <div class=" relative px-10 mx-auto flex flex-wrap gap-5  rounded-lg ">  
-    <p-table [value]="users" [rowHover]="true" class=" md:w-2/3 w-full text-sm text-left text-gray-500 shadow-md ">
-      
+  <div class="relative px-10 mx-auto flex flex-wrap gap-5 rounded-lg">
+    <p-table [value]="users" [rowHover]="true" class="md:w-2/3 w-full text-sm text-left text-gray-500 shadow-md">
+
       <!-- table header -->
-      <ng-template pTemplate="header" >
+      <ng-template pTemplate="header">
         <tr class="text-xs text-gray-700 uppercase bg-gray-100 rounded-2xl">
           <th class="px-6 py-4 font-medium" pSortableColumn="Name">
             Nome
@@ -22,9 +25,9 @@
             CPF
             <p-sortIcon field="cpf" />
           </th>
-          <th class="px-6 py-4 font-medium" pSortableColumn="isFixed">
+          <th class="px-6 py-4 font-medium" pSortableColumn="license">
             Tipo de Licença
-            <p-sortIcon field="isFixed" />
+            <p-sortIcon field="license" />
           </th>
           <th class="px-6 py-4 font-medium" pSortableColumn="email">
             E-mail
@@ -35,15 +38,14 @@
           </th>
         </tr>
       </ng-template>
-  
+
       <!-- Body -->
       <ng-template pTemplate="body" let-user>
         <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 transition-all duration-200 ease-in-out">
           <td class="px-6 py-4 text-gray-900 font-medium whitespace-nowrap">
-            
             {{ user.Name }}
-            <ng-container *ngIf="user.isFixed && hasUserLoggedToday(user.Name)">
-                <ng-container *ngIf="user.isFixed && hasUserLoggedToday(user.Name)">
+            <ng-container *ngIf="user.license === 'dinâmico' && hasUserLoggedToday(user.Name)">
+               
               <span 
                 class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full ml-2"
                 pTooltip="Já utilizou a licença hoje"
@@ -51,14 +53,14 @@
                 <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                 Hoje
               </span>
-              </ng-container>
+             
             </ng-container>
           </td>
           <td class="px-6 py-4">
             {{ user.cpf }}
           </td>
           <td class="px-6 py-4">
-            <ng-container *ngIf="user.isFixed; else fixed">
+            <ng-container *ngIf="user.license === 'dinâmico'; else fixed">
               <span class="inline-flex items-center bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full border border-orange-300">
                 Dinâmica
               </span>
@@ -81,7 +83,6 @@
               icon="pi pi-trash" 
               severity="danger"
               variant="outlined"
-              class=""
             />
             <p-button 
               [rounded]="true"
@@ -91,47 +92,40 @@
               icon="pi pi-pencil" 
               severity="info"
               variant="outlined"
-              class=" "
             />
-            
           </td>
         </tr>
       </ng-template>
-  
+
     </p-table>
 
     <!-- Fixed Users-->
-    <div class="relative p-5 mx-auto w-full md:w-fit rounded-lg ">
+    <div class="relative p-5 mx-auto w-full md:w-fit rounded-lg">
       <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 bg-white">
         <p class="py-0 px-2 justify-self-start-safe">Usuários Fixos</p>
         <span class="align-items justify-self-end-safe grid-row-2 pi pi-lock text-white bg-green rounded-full p-4"></span>
-        <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ fixedUsersCount }}</span></div>
-        
+        <div><span class="text-4xl px-2 text-gray-500 font-medium">{{ fixedUsersCount }}</span></div>
       </div>
-      
+
       <!-- Dynamic Users -->
-      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 mt-10 bg-white ">
+      <div class="shadow-md border-1 border-gray-100 text-gray-400 p-3 rounded-3xl grid grid-cols-2 mt-10 bg-white">
         <p class="py-0 px-2 justify-self-start-safe inline">Usuários Dinâmicos</p>
         <span class="align-items justify-self-end-safe grid-row-2 pi pi-history text-white bg-orange-400 rounded-full p-4"></span>
-        <div class=""><span class="text-4xl px-2 text-gray-500 font-medium">{{ dinamicUsersCount }}</span>
-        </div>
-        <span  
-        (click)="showConfig()" 
-        class="mt-2 align-items justify-self-end-safe grid-row-2 pi pi-cog text-white bg-blue rounded-full p-4 hover:cursor-pointer">
-        </span>
+        <div><span class="text-4xl px-2 text-gray-500 font-medium">{{ dinamicUsersCount }}</span></div>
+        <span (click)="showConfig()" class="mt-2 align-items justify-self-end-safe grid-row-2 pi pi-cog text-white bg-blue rounded-full p-4 hover:cursor-pointer"></span>
       </div>
-      
+    </div> 
     </div>
   </div>
+
+  <!-- Cadastro -->
   <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
     <form [formGroup]="profileForm" class="max-w-sm mx-auto p-5 space-y-6" (ngSubmit)="handleSubmit()">
-  
-      <!-- Title -->
       <div class="text-center font-sans font-bold text-2xl text-transparent bg-gradient-to-r from-blue to-green inline-block bg-clip-text">
         Cadastro de novo usuário
       </div>
-  
-      <!-- Name -->
+
+      <!-- Nome -->
       <div class="flex flex-col">
         <label for="nome" class="text-sm font-medium text-gray-700">Nome</label>
         <input type="text" id="name" formControlName="Name" placeholder="Nome" minlength="3"
@@ -149,7 +143,7 @@
           ⓘ Este nome de usuário já está em uso.
         </div>
       </div>
-  
+
       <!-- E-mail -->
       <div class="flex flex-col">
         <label for="email" class="text-sm font-medium text-gray-700">E-mail</label>
@@ -159,15 +153,15 @@
           ⓘ O formato do e-mail é inválido!
         </div>
       </div>
-  
+
       <!-- CPF -->
       <div class="flex flex-col">
         <label for="cpf" class="text-sm font-medium text-gray-700">CPF</label>
         <input type="text" id="cpf" formControlName="cpf" placeholder="123.456.789-00"
           class="shadow-inner bg-white border border-gray-300 text-gray-900 rounded-lg p-3 focus:ring-2 focus:ring-green focus:outline-none transition duration-300" />
       </div>
-  
-      <!-- Password -->
+
+      <!-- Senha -->
       <div class="flex flex-col">
         <label for="password" class="text-sm font-medium text-gray-700">Senha</label>
         <input type="password" id="password" formControlName="password" pInputText placeholder="•••••••••"
@@ -181,20 +175,22 @@
           </div>
         </ul>
       </div>
-  
-      <!-- Fixed/DYnamic checkbox -->
-      <div class="flex items-center space-x-3 mb-5">
-        <input id="terms" type="checkbox" formControlName="isFixed" class="w-4 h-4 border border-blue rounded-sm bg-blue focus:ring-2 focus:ring-green" />
-        <label for="terms" class="text-sm font-medium text-gray-600">Usuário é dinâmico?</label>
+
+      <!-- Tipo de Licença -->
+      <div class="flex flex-col">
+        <label for="license" class="text-sm font-medium text-gray-700">Tipo de Licença</label>
+        <p-dropdown [options]="licenseOptions" formControlName="license" placeholder="Selecione uma licença"
+                    optionLabel="label" optionValue="value" class="w-full"></p-dropdown>
       </div>
-  
-      <!-- Submit button -->
+
+      <!-- Botão de Enviar -->
       <button type="submit" [disabled]="profileForm.invalid"
         class="w-full py-3 mt-4 rounded-lg text-white font-semibold bg-gradient-to-r from-blue to-green hover:from-blue hover:to-green focus:outline-none focus:ring-2 focus:ring-green transition duration-300">
         Registrar novo usuário
       </button>
     </form>
   </p-dialog>
+  
 
   <!-- Editar -->
   <p-dialog [modal]="true" [(visible)]="visibleEdit" [style]="{ width: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
@@ -224,10 +220,10 @@
       </div>
   
       <!-- Tipo de Licença (Fixa/Dinâmica) -->
-      <div class="flex items-center space-x-3 mb-5 pt-5">
-        <input id="editIsFixed" type="checkbox" formControlName="isFixed" 
-          class="w-4 h-4 border border-blue rounded-sm bg-blue focus:ring-2 focus:ring-green" />
-        <label for="editIsFixed" class="text-sm font-medium text-gray-600">Usuário é dinâmico?</label>
+      <div class="flex flex-col">
+        <label for="license" class="text-sm font-medium text-gray-700">Tipo de Licença</label>
+        <p-dropdown [options]="licenseOptions" formControlName="license" placeholder="Selecione uma licença"
+                    optionLabel="label" optionValue="value" class="w-full"></p-dropdown>
       </div>
   
       <!-- Botão de Salvar -->
@@ -258,4 +254,3 @@
       </div>
     </div>
   </p-dialog>
-</div>

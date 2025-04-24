@@ -15,6 +15,7 @@ import { HeaderComponent } from "../header/header.component";
 import { Slider } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
 import { LicenseService } from '../../services/license.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ import { LicenseService } from '../../services/license.service';
   imports: [
     ReactiveFormsModule, CommonModule, ButtonModule, TableModule,
     DialogModule, ToastModule, TooltipModule, DatePickerModule,
-    CardModule, HeaderComponent, Slider, FormsModule
+    CardModule, HeaderComponent, Slider, FormsModule, DropdownModule
   ],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,7 +33,15 @@ export class RegisterComponent {
   title = 'desafio-junior';
   isNewUser: boolean = false;
   selectedUser: User | null = null;
-  // Reactive Forms validators config
+
+  // Opções de licença
+  licenseOptions: { label: string, value: string }[] = [
+    { label: 'Usuário fixo', value: 'fixo' },
+    { label: 'Usuário dinâmico', value: 'dinâmico' }
+  ];
+
+  selectedLicense: string = 'dinâmico'; // Valor padrão
+
   profileForm = new FormGroup({
     Name: new FormControl('', [
       Validators.required,
@@ -47,10 +56,9 @@ export class RegisterComponent {
       CustomValidators.passwordPattern
     ]),
     cpf: new FormControl(''),
-    isFixed: new FormControl(false),
+    license: new FormControl<'fixo' | 'dinâmico'>('dinâmico')
   });
 
-  
   editForm = new FormGroup({
     Name: new FormControl('', [
       Validators.required,
@@ -59,19 +67,32 @@ export class RegisterComponent {
     ]),
     email: new FormControl('', [Validators.email]),
     cpf: new FormControl(''),
-    isFixed: new FormControl(false),
+    license: new FormControl<'fixo' | 'dinâmico'>('dinâmico')
   });
 
   loggedDynamicUsersToday: number = 0;
   users: User[] = [];
-  
+
   constructor(
     private messageService: MessageService,
-    private licenseService: LicenseService // Adicione a injeção do serviço
+    private licenseService: LicenseService
   ) {
     this.loadUsers();
+    this.loadLicenseFromStorage();
   }
 
+  // Carregar a licença do localStorage se existir
+  loadLicenseFromStorage() {
+    const savedLicense = localStorage.getItem('license');
+    if (savedLicense) {
+      this.selectedLicense = savedLicense;
+    }
+  }
+
+  // Atualizar o valor da licença no localStorage
+  updateLicenseSelection() {
+    localStorage.setItem('license', this.selectedLicense);
+  }
 
   get MAX_DYNAMIC_LICENSES(): number {
     return this.licenseService.MAX_DYNAMIC_LICENSES;
@@ -81,14 +102,12 @@ export class RegisterComponent {
     this.licenseService.MAX_DYNAMIC_LICENSES = value;
   }
 
-  //gets current date based on simulateddate and saves on login
   getToday(): string {
     const simulated = localStorage.getItem('simulatedDate');
     const date = simulated ? new Date(simulated) : new Date();
-    return date.toISOString().split('T')[0]; // Foormat: yyyy-mm-dd
+    return date.toISOString().split('T')[0];
   }
 
-  //Loads users and count how many dynamics logged in current date
   loadUsers() {
     const usersFromStorage = localStorage.getItem('users');
     this.users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
@@ -97,13 +116,12 @@ export class RegisterComponent {
     const today = this.getToday();
 
     const dynamicUsersToday = loginHistory
-      .filter((login: any) => login.date === today && login.isDynamic)
+      .filter((login: any) => login.date === today && login.license === 'dinâmico')
       .map((login: any) => login.userName);
 
     this.loggedDynamicUsersToday = new Set(dynamicUsersToday).size;
   }
 
-  // Reactive forms Validators
   get email() {
     return this.profileForm.get('email');
   }
@@ -116,17 +134,14 @@ export class RegisterComponent {
     return this.profileForm.get('password');
   }
 
-  // Count dynamic users
   get fixedUsersCount(): number {
-    return this.users.filter(user => user.isFixed === false).length;
+    return this.users.filter(user => user.license === 'fixo').length;
   }
 
-  //Count fixed users
   get dinamicUsersCount(): number {
-    return this.users.filter(user => user.isFixed === true).length;
+    return this.users.filter(user => user.license === 'dinâmico').length;
   }
 
-  //Creates new users and saves in local storage
   createUser() {
     const newUser = this.profileForm.value as User;
 
@@ -136,26 +151,22 @@ export class RegisterComponent {
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
 
-    // resets form after submit
     this.profileForm.reset({
       Name: '',
       email: '',
       password: '',
       cpf: '',
-      isFixed: false
+      license: 'dinâmico'
     });
 
-    this.visible = false; // Closes dialog register by default
-    this.users = users; // Update table in real time
-    this.profileForm.get('username')?.updateValueAndValidity(); // Update validators
-
-
+    this.visible = false;
+    this.users = users;
+    this.profileForm.get('username')?.updateValueAndValidity();
   }
 
-  visible: boolean = false; // Sets dialog invisible by default
+  visible: boolean = false;
   visibleEdit: boolean = false;
   visibleConfig: boolean = false;
-
 
   deleteUser(userToDelete: User) {
     const usersFromStorage = localStorage.getItem('users');
@@ -163,9 +174,8 @@ export class RegisterComponent {
 
     users = users.filter((user: User) => user.Name !== userToDelete.Name);
     localStorage.setItem('users', JSON.stringify(users));
-    this.users = users; //update list
-    this.loadUsers;
-    
+    this.users = users;
+    this.loadUsers();
   }
 
   editUser(userToEdit: User) {
@@ -174,36 +184,33 @@ export class RegisterComponent {
     this.editForm.patchValue({
       Name: userToEdit.Name,
       email: userToEdit.email,
-      cpf: userToEdit.cpf,      
-      isFixed: userToEdit.isFixed 
+      cpf: userToEdit.cpf,
+      license: userToEdit.license
     });
-    this.visibleEdit = true; // Abre o dialog de edição
+    this.visibleEdit = true;
   }
 
-handleEditSubmit() {
-  if (this.editForm.valid && this.selectedUser) {
-    const updatedUser = {
-      ...this.selectedUser, // Mantém os dados originais
-      ...this.editForm.value, // Sobrescreve apenas os campos editados
-    };
+  handleEditSubmit() {
+    if (this.editForm.valid && this.selectedUser) {
+      const updatedUser = {
+        ...this.selectedUser,
+        ...this.editForm.value,
+      };
 
-    // Atualiza o localStorage
-    const usersFromStorage = localStorage.getItem('users');
-    let users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
+      const usersFromStorage = localStorage.getItem('users');
+      let users = usersFromStorage ? JSON.parse(usersFromStorage) : [];
 
-    // Substitui o usuário original pelo atualizado
-    users = users.map((user: User) =>
-      user.Name === this.selectedUser?.Name ? updatedUser : user
-    );
+      users = users.map((user: User) =>
+        user.Name === this.selectedUser?.Name ? updatedUser : user
+      );
 
-    localStorage.setItem('users', JSON.stringify(users));
-    this.loadUsers();
-    // Fecha o diálogo e reseta o formulário
-    this.visibleEdit = false;
-    this.editForm.reset();
-    this.selectedUser = null;
+      localStorage.setItem('users', JSON.stringify(users));
+      this.loadUsers();
+      this.visibleEdit = false;
+      this.editForm.reset();
+      this.selectedUser = null;
+    }
   }
-}
 
   showDialog2(){
     this.visibleEdit = true;
@@ -216,7 +223,6 @@ handleEditSubmit() {
   showConfig(){
     this.visibleConfig = true;
   }
-  // Success message after creating user
 
   showSuccess() {
     this.messageService.add({
@@ -233,27 +239,27 @@ handleEditSubmit() {
     }
   }
 
-  // Verify if the dynamic user already logged in today
   hasUserLoggedToday(userName: string): boolean {
-    const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
-    const today = this.getToday();
+  const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+  const today = this.getToday();
 
-    return loginHistory.some(
-      (login: any) =>
-        login.userName === userName &&
-        login.date === today &&
-        login.isDynamic
-    );
-    this.loadUsers;
-  }
+  return loginHistory.some(
+    (login: any) =>
+      login.userName === userName &&
+      login.date === today &&
+      login.license === 'dinâmico'
+  );
+}
 
+ 
 
 }
+
 
 interface User {
   Name: string;
   email: string;
   password: string;
   cpf: string;
-  isFixed: boolean;
+  license: 'fixo' | 'dinâmico';
 }
