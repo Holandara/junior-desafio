@@ -54,7 +54,7 @@
               "src/assets",
               {
                 "glob": "vercel.json",
-                "input": "src",
+                "input": ".",
                 "output": "/"
               }
             ],
