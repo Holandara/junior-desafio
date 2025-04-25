@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(.*).js",
+      "source": "/(.*)\\.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "source": "/(.*).(?:jpg|jpeg|gif|png|svg|ico|webp)",
+      "source": "/(.*)\\.(jpg|jpeg|gif|png|svg|ico|webp)$",
       "headers": [
         {
           "key": "Cache-Control",
