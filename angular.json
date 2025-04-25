@@ -50,9 +50,12 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
-                "glob": "**/*",
-                "input": "public"
+                "glob": "vercel.json",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": [
