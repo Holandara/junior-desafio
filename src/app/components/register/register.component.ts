@@ -35,13 +35,12 @@ export class RegisterComponent {
   title = 'desafio-junior';
   isNewUser: boolean = false;
   selectedUser: User | null = null;
-
+  PERSONALIZADOS_KEY = 'manualLicenses';
   // Opções de licença
   licenseOptions: { label: string, value: string }[] = [
     { label: 'Usuário fixo', value: 'fixo' },
-    { label: 'Usuário dinâmico', value: 'dinâmico' },
-    { label: 'Personalizado', value: 'nova' }
-  ];
+    { label: 'Usuário dinâmico', value: 'dinâmico' }
+    ];
 
   selectedLicense: string = 'dinâmico'; // Valor padrão
 
@@ -83,6 +82,7 @@ export class RegisterComponent {
     private currentDateService: CurrentDateService
   ) {
     this.loadUsers();
+    this.loadLicenseOptions();
     this.loadLicenseFromStorage();
     
   }
@@ -108,6 +108,17 @@ export class RegisterComponent {
     localStorage.setItem('license', this.selectedLicense);
   }
 
+  //pega licenças personalizadas do localstorage
+  loadLicenseOptions(){
+    const manualLicenses = JSON.parse(localStorage.getItem('manualLicenses')|| '[]')
+
+    manualLicenses.forEach((license: any)=>{
+      this.licenseOptions.push({
+        label: license.licenseName,
+        value: license.licenseName
+      });
+    });
+  }
   get MAX_DYNAMIC_LICENSES(): number {
     return this.licenseService.MAX_DYNAMIC_LICENSES;
   }

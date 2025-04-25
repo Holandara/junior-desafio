@@ -85,9 +85,9 @@
                 Fixa
               </span>
             
-              <span *ngSwitchCase="'nova'"
-                class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full border border-blue-300">
-                Personalizada
+              <span *ngSwitchDefault
+              class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full border border-blue-300">
+              {{user.license}}
               </span>
             
               
@@ -229,10 +229,12 @@
       </div>
   
       <!-- Tipo de Licença (Fixa/Dinâmica) -->
+       
       <div class="flex flex-col">
         <label for="license" class="text-sm font-medium text-gray-700">Tipo de Licença</label>
         <p-dropdown [options]="licenseOptions" formControlName="license" placeholder="Selecione uma licença"
                     optionLabel="label" optionValue="value" class="w-full"></p-dropdown>
+                   
       </div>
   
       <!-- Botão de Salvar -->

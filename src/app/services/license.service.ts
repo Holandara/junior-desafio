@@ -7,6 +7,7 @@ import { CurrentDateService } from './current-date.service';
 export class LicenseService {
   private _MAX_DYNAMIC_LICENSES = 0;
   private readonly LOGIN_HISTORY_KEY = 'loginHistory';
+ 
 
   get MAX_DYNAMIC_LICENSES(): number {
     return this._MAX_DYNAMIC_LICENSES;
