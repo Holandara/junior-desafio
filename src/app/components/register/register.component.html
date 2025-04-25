@@ -142,6 +142,9 @@
         <div *ngIf="Name?.errors?.['minlength']" class="text-sm text-red-600 mt-1">
           ⓘ O nome deve ter no mínimo 3 caracteres.
         </div>
+        <div *ngIf="Name?.errors?.['maxlength']" class="text-sm text-red-600 mt-1">
+          ⓘ O nome deve ter no máximo 10 caracteres.
+        </div>
         <div *ngIf="Name?.errors?.['namePattern']" class="text-sm text-red-600 mt-1">
           ⓘ O nome deve ser alfanumérico.
         </div>
